@@ -1,10 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:get/get.dart';
 
 class ProductContentFirst extends StatelessWidget {
   ProductContentFirstController vm = Get.put(ProductContentFirstController());
+  ProductContentController father = Get.find();
+
+  List<Widget> _getAttrWidget() {
+    List<Widget> attrList = [];
+
+    vm._attr.forEach((element) {
+      List<Widget> list = [];
+      element.list.forEach((item) {
+        list.add(Container(
+          margin: EdgeInsets.all(10),
+          child: Chip(padding: EdgeInsets.all(10), label: Text(item)),
+        ));
+      });
+      attrList.add(Wrap(
+        children: [
+          Container(
+            width: setWidth(100),
+            child: Padding(
+              padding: EdgeInsets.only(top: setWidth(22)),
+              child: Text(
+                element.cate,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Container(
+            width: setWidth(600),
+            child: Wrap(children: list),
+          )
+        ],
+      ));
+    });
+    return attrList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,68 +58,8 @@ class ProductContentFirst extends StatelessWidget {
                     child: ListView(
                       children: [
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Wrap(
-                              children: [
-                                Container(
-                                  width: setWidth(100),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: setWidth(22)),
-                                    child: Text(
-                                      '颜色',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: setWidth(600),
-                                  child: Wrap(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Chip(
-                                            padding: EdgeInsets.all(10),
-                                            label: Text('白色')),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Chip(
-                                            padding: EdgeInsets.all(10),
-                                            label: Text('白色')),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Chip(
-                                            padding: EdgeInsets.all(10),
-                                            label: Text('白色')),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Chip(
-                                            padding: EdgeInsets.all(10),
-                                            label: Text('白色')),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Chip(
-                                            padding: EdgeInsets.all(10),
-                                            label: Text('白色')),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Chip(
-                                            padding: EdgeInsets.all(10),
-                                            label: Text('白色')),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        )
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: _getAttrWidget())
                       ],
                     ),
                   ),
@@ -134,13 +109,12 @@ class ProductContentFirst extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 16 / 9,
-              child:
-                  Image.network("https://www.itying.com/images/flutter/p1.jpg"),
+              child: Image.network(father.productContentData.value.pic),
             ),
             Container(
               padding: EdgeInsets.only(top: 10),
               child: Text(
-                '联想ThinkPad 翼480 （0VCD）英特尔酷睿i5 14英寸轻薄窄边框笔记本电脑',
+                father.productContentData.value.title,
                 style:
                     TextStyle(color: Colors.black87, fontSize: setFontSize(36)),
               ),
@@ -148,7 +122,9 @@ class ProductContentFirst extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(top: 10),
               child: Text(
-                '震撼首发，15.9毫米全金属外观，4.9毫米轻薄窄边框，指纹电源按钮，杜比音效，2G独显，预装正版office',
+                father.productContentData.value.subTitle == null
+                    ? '没有副标题'
+                    : father.productContentData.value.subTitle,
                 style:
                     TextStyle(color: Colors.black45, fontSize: setFontSize(28)),
               ),
@@ -164,7 +140,7 @@ class ProductContentFirst extends StatelessWidget {
                         children: [
                           Text('特价：'),
                           Text(
-                            '￥28',
+                            '￥${father.productContentData.value.price}',
                             style: TextStyle(
                                 color: Colors.red, fontSize: setFontSize(46)),
                           )
@@ -177,7 +153,7 @@ class ProductContentFirst extends StatelessWidget {
                         children: [
                           Text('原价：'),
                           Text(
-                            '￥50',
+                            '￥${father.productContentData.value.oldPrice}',
                             style: TextStyle(
                                 color: Colors.black38,
                                 fontSize: setFontSize(28),
@@ -227,4 +203,16 @@ class ProductContentFirst extends StatelessWidget {
   }
 }
 
-class ProductContentFirstController extends GetxController {}
+class ProductContentFirstController extends GetxController {
+  ProductContentController father = Get.find();
+
+  final _attr = [].obs;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    _attr(father.productContentData.value.attr);
+    // print(_attr.value[0].list);
+    super.onInit();
+  }
+}

@@ -22,10 +22,10 @@ class ProductContentItem {
   String sId;
   String title;
   String cid;
-  String price;
+  Object price;
   String oldPrice;
   Object isBest;
-  String isHot;
+  Object isHot;
   String isNew;
   String status;
   String pic;
