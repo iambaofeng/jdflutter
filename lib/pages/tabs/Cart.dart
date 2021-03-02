@@ -70,6 +70,4 @@ class CartPage extends StatelessWidget {
   }
 }
 
-class CartPageController extends GetxController {
-  CartController cartservices = Get.find();
-}
+class CartPageController extends GetxController {}

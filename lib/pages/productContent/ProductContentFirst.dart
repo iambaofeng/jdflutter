@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/model/ProductContentModel.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
+import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,12 @@ import 'package:get/get.dart';
 class ProductContentFirst extends StatelessWidget {
   ProductContentFirstController vm = Get.put(ProductContentFirstController());
   ProductContentController father = Get.find();
+  CartController cartServices = Get.find();
+  ProductContentFirst() {
+    ever(cartServices.productAttrBottomSheet, (value) {
+      _showBottomSheet(value);
+    });
+  }
 
   List<Widget> _getAttrWidget() {
     List<Widget> attrList = [];
@@ -52,17 +59,18 @@ class ProductContentFirst extends StatelessWidget {
     return attrList;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // Get.bottomSheet(c)
+  _showBottomSheet(value) {
+    if (value) {
+      _attrBottomSheet();
+    }
+  }
 
-    _attrBottomSheet() {
-      // SmartDialog.show(widget: _dialog());
-      Get.bottomSheet(
-        GestureDetector(
-          onTap: () {
-            return false;
-          },
+  _attrBottomSheet() {
+    SmartDialog.show(
+      alignmentTemp: Alignment.bottomCenter,
+      widget: Container(
+          height: setHeight(600),
+          color: Colors.white,
           child: Stack(
             children: [
               Container(
@@ -116,11 +124,16 @@ class ProductContentFirst extends StatelessWidget {
                 bottom: 0,
               )
             ],
-          ),
-        ),
-        backgroundColor: Colors.white,
-      );
-    }
+          )),
+    ).then((value) {
+      cartServices.productAttrBottomSheet.value = false;
+      // Get.back();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Get.bottomSheet(c)
 
     return Container(
       child: Container(
@@ -191,7 +204,7 @@ class ProductContentFirst extends StatelessWidget {
                     height: setHeight(80),
                     child: InkWell(
                       onTap: () {
-                        _attrBottomSheet();
+                        cartServices.productAttrBottomSheet.value = true;
                       },
                       child: Row(
                         children: [
@@ -227,6 +240,7 @@ class ProductContentFirst extends StatelessWidget {
 
 class ProductContentFirstController extends GetxController {
   ProductContentController father = Get.find();
+  CartController cartController = Get.find();
   var dataList = [];
   final _title = ''.obs;
   _changeAttr(attr, item) {
@@ -255,6 +269,7 @@ class ProductContentFirstController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     dataList = father.productContentData.value.attr ?? [];
+
     super.onInit();
   }
 }

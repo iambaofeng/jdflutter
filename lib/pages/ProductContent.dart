@@ -6,12 +6,14 @@ import 'package:flutter_jdshop/model/ProductContentModel.dart';
 import 'package:flutter_jdshop/pages/productContent/ProductContentFirst.dart';
 import 'package:flutter_jdshop/pages/productContent/ProductContentSecond.dart';
 import 'package:flutter_jdshop/pages/productContent/ProductContentThird.dart';
+import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/widgets/JDButtonWidget.dart';
 import 'package:flutter_jdshop/widgets/LoadingWidget.dart';
 import 'package:get/get.dart';
 
 class ProductContentPage extends StatelessWidget {
   ProductContentController vm = Get.put(ProductContentController());
+  CartController cartServices = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +105,14 @@ class ProductContentPage extends StatelessWidget {
                                   child: JdButton(
                                     color: Color.fromRGBO(253, 1, 0, 0.9),
                                     cb: () {
-                                      print('123');
+                                      if (vm.productContentData.value.attr
+                                              .length >
+                                          0) {
+                                        cartServices.productAttrBottomSheet
+                                            .value = true;
+                                      } else {
+                                        print('无属性');
+                                      }
                                     },
                                     text: '加入购物车',
                                   )),
@@ -112,7 +121,14 @@ class ProductContentPage extends StatelessWidget {
                                   child: JdButton(
                                     color: Color.fromRGBO(255, 165, 0, 0.9),
                                     cb: () {
-                                      print('456');
+                                      if (vm.productContentData.value.attr
+                                              .length >
+                                          0) {
+                                        cartServices.productAttrBottomSheet
+                                            .value = true;
+                                      } else {
+                                        print('无属性');
+                                      }
                                     },
                                     text: '立即购买',
                                   )),
@@ -132,6 +148,7 @@ class ProductContentPage extends StatelessWidget {
 class ProductContentController extends GetxController {
   String _id = '';
   final productContentData = ProductContentItem().obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
