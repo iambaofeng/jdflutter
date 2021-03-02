@@ -4,11 +4,18 @@ import 'package:get/get.dart';
 
 import '../ProductContent.dart';
 
-class ProductContentSecond extends StatelessWidget {
-  ProductContentSecondController vm = Get.put(ProductContentSecondController());
-
-  var _id;
+class ProductContentSecond extends StatefulWidget {
   @override
+  ProductContentSecondState createState() => ProductContentSecondState();
+}
+
+class ProductContentSecondState extends State<ProductContentSecond>
+    with AutomaticKeepAliveClientMixin {
+  ProductContentSecondController vm = Get.put(ProductContentSecondController());
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
   Widget build(BuildContext context) {
     return Container(
       child: Column(
@@ -30,7 +37,7 @@ class ProductContentSecondController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     _id = father.productContentData.value.sId;
-    print(_id);
+    // print(_id)
     _url = 'http://jd.itying.com/pcontent?id=${this._id}';
     print(_url);
     super.onInit();

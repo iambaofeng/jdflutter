@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jdshop/services/ServicesBind.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import './routers/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +15,6 @@ Future<void> main() async {
 
 class Myapp extends StatelessWidget {
   MyAppController vm = Get.put(MyAppController());
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -23,12 +24,15 @@ class Myapp extends StatelessWidget {
         designSize: Size(750, 1334),
         allowFontScaling: false,
         child: GetMaterialApp(
-          // smartManagement: SmartManagement.keepFactory,
-          initialRoute: '/',
-          getPages: routes,
-          theme: ThemeData(primaryColor: Colors.white),
-          debugShowCheckedModeBanner: false,
-        ));
+            // smartManagement: SmartManagement.keepFactory,
+            initialRoute: '/',
+            getPages: routes,
+            theme: ThemeData(primaryColor: Colors.white),
+            debugShowCheckedModeBanner: false,
+            builder: (BuildContext context, Widget child) {
+              return FlutterSmartDialog(child: child);
+            },
+            initialBinding: ServicesBind()));
   }
 }
 

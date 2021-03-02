@@ -64,7 +64,7 @@ class ProductContentPage extends StatelessWidget {
               ],
             ),
             body: Obx(() {
-              if (vm.productContentData.value.title != null) {
+              if (vm.productContentData.value.sId != null) {
                 return Stack(
                   children: [
                     TabBarView(
@@ -123,6 +123,7 @@ class ProductContentPage extends StatelessWidget {
                 );
               } else {
                 return LoadingWidget();
+                // return Container();
               }
             })));
   }
@@ -146,7 +147,7 @@ class ProductContentController extends GetxController {
     var res = await Dio().get(api);
 
     // print(res.data);
-    var result = ProductContentModel.fromJson(res.data).result;
+    var result = (ProductContentModel.fromJson(res.data).result);
     result.pic = Config.domain + result.pic.replaceAll('\\', '/');
     print(result.pic);
     print(result.title);

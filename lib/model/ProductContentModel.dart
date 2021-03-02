@@ -1,3 +1,5 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
 class ProductContentModel {
   ProductContentItem result;
 
@@ -98,15 +100,25 @@ class ProductContentItem {
   }
 }
 
+class ProductAttrItem {
+  var title;
+  var checked;
+  ProductAttrItem({this.title, this.checked});
+}
+
 class Attr {
   String cate;
   List<String> list;
-
+  RxList attrlist;
   Attr({this.cate, this.list});
 
   Attr.fromJson(Map<String, dynamic> json) {
     cate = json['cate'];
     list = json['list'].cast<String>();
+    attrlist = [].obs;
+    list.forEach((element) {
+      attrlist.add(ProductAttrItem(title: element, checked: false).obs);
+    });
   }
 
   Map<String, dynamic> toJson() {

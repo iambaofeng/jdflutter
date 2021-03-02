@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/model/ProductContentModel.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class ProductContentFirst extends StatelessWidget {
@@ -11,12 +13,21 @@ class ProductContentFirst extends StatelessWidget {
   List<Widget> _getAttrWidget() {
     List<Widget> attrList = [];
 
-    vm._attr.forEach((element) {
+    vm.dataList.forEach((element) {
       List<Widget> list = [];
-      element.list.forEach((item) {
+      element.attrlist.forEach((item) {
         list.add(Container(
           margin: EdgeInsets.all(10),
-          child: Chip(padding: EdgeInsets.all(10), label: Text(item)),
+          child: InkWell(
+            onTap: () {
+              vm._changeAttr(element.attrlist, item);
+            },
+            child: Chip(
+              padding: EdgeInsets.all(10),
+              label: Text(item.value.title),
+              backgroundColor: item.value.checked ? Colors.red : Colors.black26,
+            ),
+          ),
         ));
       });
       attrList.add(Wrap(
@@ -43,63 +54,72 @@ class ProductContentFirst extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get.bottomSheet(c)
+
     _attrBottomSheet() {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return GestureDetector(
-              onTap: () {
-                return false;
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(setWidth(20)),
-                    child: ListView(
-                      children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: _getAttrWidget())
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    width: setWidth(750),
-                    height: setHeight(76),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: JdButton(
-                                color: Color.fromRGBO(253, 1, 0, 0.9),
-                                cb: () {
-                                  print('123');
-                                },
-                                text: '加入购物车',
-                              ),
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                              child: JdButton(
-                                color: Color.fromRGBO(255, 165, 0, 0.9),
-                                cb: () {
-                                  print('456');
-                                },
-                                text: '立即购买',
-                              ),
-                            )),
-                      ],
-                    ),
-                    bottom: 0,
-                  )
-                ],
+      // SmartDialog.show(widget: _dialog());
+      Get.bottomSheet(
+        GestureDetector(
+          onTap: () {
+            return false;
+          },
+          child: Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.all(setWidth(20)),
+                child: _getAttrWidget().length > 0
+                    ? ListView(
+                        children: [
+                          Obx(() => Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: _getAttrWidget()))
+                        ],
+                      )
+                    : Container(
+                        height: setHeight(300),
+                        child: Center(
+                          child: Text('无属性'),
+                        ),
+                      ),
               ),
-            );
-          });
+              Positioned(
+                width: setWidth(750),
+                height: setHeight(76),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: JdButton(
+                            color: Color.fromRGBO(253, 1, 0, 0.9),
+                            cb: () {
+                              print('123');
+                            },
+                            text: '加入购物车',
+                          ),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                          child: JdButton(
+                            color: Color.fromRGBO(255, 165, 0, 0.9),
+                            cb: () {
+                              print('456');
+                            },
+                            text: '立即购买',
+                          ),
+                        )),
+                  ],
+                ),
+                bottom: 0,
+              )
+            ],
+          ),
+        ),
+        backgroundColor: Colors.white,
+      );
     }
 
     return Container(
@@ -165,24 +185,26 @@ class ProductContentFirst extends StatelessWidget {
               ),
             ),
             //筛选
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              height: setHeight(80),
-              child: InkWell(
-                onTap: () {
-                  _attrBottomSheet();
-                },
-                child: Row(
-                  children: [
-                    Text(
-                      '已选:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+            vm.dataList.length > 0
+                ? Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: setHeight(80),
+                    child: InkWell(
+                      onTap: () {
+                        _attrBottomSheet();
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            '已选:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Obx(() => Text("${vm._title}1件"))
+                        ],
+                      ),
                     ),
-                    Text("115，黑色，XL，1件")
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : Text(''),
             Divider(),
             Container(
               height: setHeight(80),
@@ -205,14 +227,34 @@ class ProductContentFirst extends StatelessWidget {
 
 class ProductContentFirstController extends GetxController {
   ProductContentController father = Get.find();
+  var dataList = [];
+  final _title = ''.obs;
+  _changeAttr(attr, item) {
+    attr.forEach((element) {
+      element.value.checked = false;
+    });
 
-  final _attr = [].obs;
+    item(ProductAttrItem(title: item.value.title, checked: true));
+    _getSelectedAttrValue();
+  }
+
+  _getSelectedAttrValue() {
+    var list = [];
+    dataList.forEach((element) {
+      print(element);
+      element.attrlist.forEach((item) {
+        if (item.value.checked) {
+          list.add(item.value.title);
+        }
+      });
+    });
+    _title.value = list.join('，');
+  }
 
   @override
   void onInit() {
     // TODO: implement onInit
-    _attr(father.productContentData.value.attr);
-    // print(_attr.value[0].list);
+    dataList = father.productContentData.value.attr ?? [];
     super.onInit();
   }
 }
