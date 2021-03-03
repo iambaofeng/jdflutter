@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/model/CatProductModel.dart';
+import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:get/get.dart';
 
 import 'CartNumber.dart';
@@ -8,6 +9,7 @@ import 'CartNumber.dart';
 class CartItem extends StatelessWidget {
   Rx<CatProductModel> data;
   CartItemController vm = Get.put(CartItemController());
+  CartServices cartServices = Get.find();
   CartItem(this.data);
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,13 @@ class CartItem extends StatelessWidget {
               width: setWidth(60),
               child: Checkbox(
                 value: data.value.checked,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  data.update((val) {
+                    val.checked = !val.checked;
+                  });
+                  cartServices.checkAllChecked();
+                  cartServices.updataCartList();
+                },
                 activeColor: Colors.pink,
               ),
             ),

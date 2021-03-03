@@ -11,6 +11,7 @@ class CartServices extends GetxService {
   final str = ''.obs;
   final productAttrBottomSheet = false.obs;
   final cartList = <Rx<CatProductModel>>[].obs;
+  final isCheckedAll = false.obs;
   @override
   void onInit() async {
     // TODO: implement onInit
@@ -19,8 +20,7 @@ class CartServices extends GetxService {
     cartListData.forEach((item) {
       cartList.add(CatProductModel.fromJson(item).obs);
     });
-    print(cartList);
-    print(cartList[0]);
+    checkAllChecked();
     super.onInit();
   }
 
@@ -30,8 +30,6 @@ class CartServices extends GetxService {
     var cartProduct = formatCartData(item);
     setCartListData(cartProduct);
   }
-
-  // addCartFromCart(CatProductModel item) async {}
 
   getCartListData() async {
     var data = await Storage.getString('cartList');
@@ -94,5 +92,35 @@ class CartServices extends GetxService {
     data['pic'] = item.pic;
     data['checked'] = item.checked;
     return data;
+  }
+
+  //检查勾选，反填全选、反选
+  void checkAllChecked() {
+    if (cartList.any((element) => element.value.checked == false)) {
+      isCheckedAll.value = false;
+    } else {
+      isCheckedAll.value = true;
+    }
+  }
+
+  //全选、反选
+  void changeAllSelected() {
+    if (isCheckedAll.value) {
+      cartList.forEach((element) {
+        element.update((val) {
+          val.checked = false;
+        });
+      });
+      isCheckedAll.value = false;
+    } else {
+      cartList.forEach((element) {
+        element.update((val) {
+          val.checked = true;
+        });
+      });
+      isCheckedAll.value = true;
+    }
+    // print(json.encode(cartList));
+    updataCartList();
   }
 }

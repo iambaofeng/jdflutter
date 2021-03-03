@@ -51,8 +51,10 @@ class CartPage extends StatelessWidget {
                               Container(
                                 width: setWidth(60),
                                 child: Checkbox(
-                                  value: true,
-                                  onChanged: (value) {},
+                                  value: cartServices.isCheckedAll.value,
+                                  onChanged: (value) {
+                                    cartServices.changeAllSelected();
+                                  },
                                   activeColor: Colors.pink,
                                 ),
                               ),
