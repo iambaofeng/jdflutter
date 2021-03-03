@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 
 class ProductContentPage extends StatelessWidget {
   ProductContentController vm = Get.put(ProductContentController());
-  CartController cartServices = Get.find();
+  CartServices cartServices = Get.find();
 
   @override
   Widget build(BuildContext context) {

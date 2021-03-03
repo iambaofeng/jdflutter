@@ -8,7 +8,12 @@ class Storage {
 
   static Future<String> getString(key) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    return sp.getString(key);
+
+    if (sp.containsKey(key)) {
+      return sp.getString(key);
+    } else {
+      return null;
+    }
   }
 
   static Future<void> clear() async {

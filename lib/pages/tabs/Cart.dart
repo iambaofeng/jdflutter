@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class CartPage extends StatelessWidget {
   CartPageController vm = Get.put(CartPageController());
-
+  CartServices cartServices = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +18,9 @@ class CartPage extends StatelessWidget {
       body: Stack(
         children: [
           ListView(
-            children: [CartItem(), CartItem(), CartItem()],
+            children: cartServices.cartList.map((element) {
+              return CartItem(element);
+            }).toList(),
           ),
           Positioned(
             child: Container(

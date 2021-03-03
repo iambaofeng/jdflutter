@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/model/CatProductModel.dart';
 import 'package:get/get.dart';
 
 class CartNumber extends StatelessWidget {
   CartNumberController vm = Get.put(CartNumberController());
-
+  Rx<CatProductModel> data;
+  CartNumber(this.data);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,7 +55,7 @@ class CartNumber extends StatelessWidget {
               right: BorderSide(width: 1, color: Colors.black12))),
       width: setWidth(70),
       height: setHeight(45),
-      child: Text('1'),
+      child: Text('${data.value.count}'),
     );
   }
 }

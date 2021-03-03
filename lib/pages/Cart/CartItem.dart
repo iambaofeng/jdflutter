@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/model/CatProductModel.dart';
 import 'package:get/get.dart';
 
 import 'CartNumber.dart';
 
 class CartItem extends StatelessWidget {
+  Rx<CatProductModel> data;
   CartItemController vm = Get.put(CartItemController());
-
+  CartItem(this.data);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Obx(() => Container(
         padding: EdgeInsets.all(5),
         height: setHeight(200),
         decoration: BoxDecoration(
@@ -21,7 +23,7 @@ class CartItem extends StatelessWidget {
             Container(
               width: setWidth(60),
               child: Checkbox(
-                value: true,
+                value: data.value.checked,
                 onChanged: (value) {},
                 activeColor: Colors.pink,
               ),
@@ -30,7 +32,7 @@ class CartItem extends StatelessWidget {
             Container(
               width: setWidth(160),
               child: Image.network(
-                'https://www.itying.com/images/flutter/list2.jpg',
+                data.value.pic,
                 fit: BoxFit.cover,
               ),
             ),
@@ -43,7 +45,7 @@ class CartItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '菲特旋转盖轻量杯不锈钢保温杯学生杯商务杯情侣杯保冷杯子便携水杯LHC4131WB(450M1)白蓝',
+                        data.value.title,
                         maxLines: 2,
                       ),
                       Stack(
@@ -51,13 +53,13 @@ class CartItem extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              '￥12',
+                              data.value.price,
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: CartNumber(),
+                            child: CartNumber(data),
                           )
                         ],
                       )
@@ -65,7 +67,7 @@ class CartItem extends StatelessWidget {
                   ),
                 ))
           ],
-        ));
+        )));
   }
 }
 

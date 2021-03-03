@@ -6,7 +6,7 @@ class ServicesBind implements Bindings {
   void dependencies() {
     //载入全局使用的Sercices
     //购物车服务
-    Get.lazyPut<CartController>(() => CartController());
+    Get.lazyPut<CartServices>(() => CartServices());
     // TODO: implement dependencies
   }
 }

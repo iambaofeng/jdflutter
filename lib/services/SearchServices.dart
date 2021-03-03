@@ -4,10 +4,10 @@ import 'Storage.dart';
 
 class SearchServices {
   static setSearchData(value) async {
-    try {
-      //判断里面有没有数据
-      List searchListData = json.decode(await Storage.getString('searchList'));
-      print(searchListData);
+    var data = await Storage.getString('searchList');
+    if (data != null) {
+      //有数据
+      List searchListData = json.decode(data);
       bool hasData = searchListData.any((v) {
         return v == value;
       });
@@ -15,19 +15,22 @@ class SearchServices {
         searchListData.add(value);
         await Storage.setString('searchList', json.encode(searchListData));
       }
-    } catch (e) {
-      print('没有数据');
+    } else {
+      //无数据
       List tempList = [];
       tempList.add(value);
-      Storage.setString('searchList', json.encode(tempList));
+      await Storage.setString('searchList', json.encode(tempList));
     }
   }
 
   static getSearchData(value) async {
-    try {
-      List searchListData = json.decode(await Storage.getString('searchList'));
+    var data = await Storage.getString('searchList');
+    if (data != null) {
+      //有数据
+      List searchListData = json.decode(data);
       return searchListData;
-    } catch (e) {
+    } else {
+      //无数据
       return [];
     }
   }

@@ -36,7 +36,9 @@ class ProductContentItem {
   List<Attr> attr;
   String subTitle;
   int salecount;
-
+  int count;
+  String selectedAttr;
+  bool checked;
   ProductContentItem(
       {this.sId,
       this.title,
@@ -52,7 +54,10 @@ class ProductContentItem {
       this.cname,
       this.attr,
       this.subTitle,
-      this.salecount});
+      this.salecount,
+      this.count,
+      this.checked,
+      this.selectedAttr});
 
   ProductContentItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -75,6 +80,9 @@ class ProductContentItem {
     }
     subTitle = json['sub_title'];
     salecount = json['salecount'];
+    count = 1;
+    selectedAttr = '';
+    checked = true;
   }
 
   Map<String, dynamic> toJson() {

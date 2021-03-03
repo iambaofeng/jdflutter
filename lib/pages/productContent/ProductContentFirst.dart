@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/model/ProductContentModel.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
+import 'package:flutter_jdshop/pages/productContent/CartNumber.dart';
 import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -10,7 +11,7 @@ import 'package:get/get.dart';
 class ProductContentFirst extends StatelessWidget {
   ProductContentFirstController vm = Get.put(ProductContentFirstController());
   ProductContentController father = Get.find();
-  CartController cartServices = Get.find();
+  CartServices cartServices = Get.find();
   ProductContentFirst() {
     ever(cartServices.productAttrBottomSheet, (value) {
       _showBottomSheet(value);
@@ -80,7 +81,19 @@ class ProductContentFirst extends StatelessWidget {
                         children: [
                           Obx(() => Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: _getAttrWidget()))
+                              children: _getAttrWidget())),
+                          Divider(),
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            height: setHeight(80),
+                            child: Row(
+                              children: [
+                                Text('数量：'),
+                                SizedBox(width: 10),
+                                ProductContentCartNumber()
+                              ],
+                            ),
+                          )
                         ],
                       )
                     : Container(
@@ -102,7 +115,10 @@ class ProductContentFirst extends StatelessWidget {
                           child: JdButton(
                             color: Color.fromRGBO(253, 1, 0, 0.9),
                             cb: () {
-                              print('123');
+                              cartServices
+                                  .addCart(father.productContentData.value);
+                              vm._getSelectedAttrValue();
+                              SmartDialog.dismiss();
                             },
                             text: '加入购物车',
                           ),
@@ -240,7 +256,7 @@ class ProductContentFirst extends StatelessWidget {
 
 class ProductContentFirstController extends GetxController {
   ProductContentController father = Get.find();
-  CartController cartController = Get.find();
+  CartServices cartController = Get.find();
   var dataList = [];
   final _title = ''.obs;
   _changeAttr(attr, item) {
@@ -263,13 +279,19 @@ class ProductContentFirstController extends GetxController {
       });
     });
     _title.value = list.join('，');
+    father.productContentData.update((val) {
+      val.selectedAttr = _title.value;
+    });
   }
 
   @override
   void onInit() {
     // TODO: implement onInit
     dataList = father.productContentData.value.attr ?? [];
-
+    //商品属性默认选第一个
+    dataList.forEach((element) {
+      element.attrlist[0].value.checked = true;
+    });
     super.onInit();
   }
 }
