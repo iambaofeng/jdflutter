@@ -2,7 +2,7 @@ class CatProductModel {
   String sId;
   String title;
   String pic;
-  String price;
+  Object price;
   String selectedAttr;
   int count;
   bool checked;

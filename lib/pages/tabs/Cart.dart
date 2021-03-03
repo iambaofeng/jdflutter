@@ -8,6 +8,13 @@ import 'package:get/get.dart';
 class CartPage extends StatelessWidget {
   CartPageController vm = Get.put(CartPageController());
   CartServices cartServices = Get.find();
+
+  List<Widget> getCartItemList() {
+    return cartServices.cartList.map((element) {
+      return CartItem(element);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,61 +22,72 @@ class CartPage extends StatelessWidget {
         title: Text('购物车'),
         actions: [IconButton(icon: Icon(Icons.launch), onPressed: () {})],
       ),
-      body: Stack(
-        children: [
-          ListView(
-            children: cartServices.cartList.map((element) {
-              return CartItem(element);
-            }).toList(),
-          ),
-          Positioned(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  border:
-                      Border(top: BorderSide(width: 1, color: Colors.black12))),
-              child: Stack(
-                children: [
-                  //左侧全选
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
+      body: Obx(() => cartServices.cartList.length > 0
+          ? Stack(
+              children: [
+                ListView(
+                  children: [
+                    Column(
+                      children: getCartItemList(),
+                    ),
+                    SizedBox(
+                      height: setHeight(100),
+                    )
+                  ],
+                ),
+                Positioned(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(
+                            top: BorderSide(width: 1, color: Colors.black12))),
+                    child: Stack(
                       children: [
-                        Container(
-                          width: setWidth(60),
-                          child: Checkbox(
-                            value: true,
-                            onChanged: (value) {},
-                            activeColor: Colors.pink,
+                        //左侧全选
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: setWidth(60),
+                                child: Checkbox(
+                                  value: true,
+                                  onChanged: (value) {},
+                                  activeColor: Colors.pink,
+                                ),
+                              ),
+                              Text('全选')
+                            ],
                           ),
                         ),
-                        Text('全选')
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: RaisedButton(
+                            onPressed: () {},
+                            child: Text(
+                              '结算',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            color: Colors.red,
+                          ),
+                        )
                       ],
                     ),
+                    // color: Colors.red,
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: RaisedButton(
-                      onPressed: () {},
-                      child: Text(
-                        '结算',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.red,
-                    ),
-                  )
-                ],
-              ),
-              // color: Colors.red,
-            ),
-            bottom: 0,
-            width: setWidth(750),
-            height: setHeight(78),
-          )
-        ],
-      ),
+                  bottom: 0,
+                  width: setWidth(750),
+                  height: setHeight(78),
+                )
+              ],
+            )
+          : Center(
+              child: Text(vm._title.value),
+            )),
     );
   }
 }
 
-class CartPageController extends GetxController {}
+class CartPageController extends GetxController {
+  final _title = '购物车空空的.....'.obs;
+}

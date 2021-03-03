@@ -28,7 +28,13 @@ class CartNumber extends StatelessWidget {
         height: setHeight(45),
         child: Text('-'),
       ),
-      onTap: () {},
+      onTap: () {
+        if (data.value.count > 0) {
+          data.update((val) {
+            val.count--;
+          });
+        }
+      },
     );
   }
 
@@ -41,7 +47,11 @@ class CartNumber extends StatelessWidget {
         height: setHeight(45),
         child: Text('+'),
       ),
-      onTap: () {},
+      onTap: () {
+        data.update((val) {
+          val.count++;
+        });
+      },
     );
   }
 

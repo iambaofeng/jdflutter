@@ -111,7 +111,9 @@ class ProductContentPage extends StatelessWidget {
                                         cartServices.productAttrBottomSheet
                                             .value = true;
                                       } else {
-                                        print('无属性');
+                                        cartServices.addCart(
+                                            vm.productContentData.value);
+                                        // print('无属性');
                                       }
                                     },
                                     text: '加入购物车',

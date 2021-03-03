@@ -43,9 +43,14 @@ class CartItem extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(10, 10, 5, 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         data.value.title,
+                        maxLines: 2,
+                      ),
+                      Text(
+                        data.value.selectedAttr,
                         maxLines: 2,
                       ),
                       Stack(
@@ -53,7 +58,7 @@ class CartItem extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              data.value.price,
+                              "${data.value.price}",
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
