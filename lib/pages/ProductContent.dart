@@ -9,6 +9,7 @@ import 'package:flutter_jdshop/pages/productContent/ProductContentThird.dart';
 import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/widgets/JDButtonWidget.dart';
 import 'package:flutter_jdshop/widgets/LoadingWidget.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class ProductContentPage extends StatelessWidget {
@@ -113,6 +114,8 @@ class ProductContentPage extends StatelessWidget {
                                       } else {
                                         cartServices.addCart(
                                             vm.productContentData.value);
+                                        SmartDialog.showToast('添加成功',
+                                            alignment: Alignment.center);
                                         // print('无属性');
                                       }
                                     },

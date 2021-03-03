@@ -119,6 +119,8 @@ class ProductContentFirst extends StatelessWidget {
                                   .addCart(father.productContentData.value);
                               vm._getSelectedAttrValue();
                               SmartDialog.dismiss();
+                              SmartDialog.showToast('添加成功',
+                                  alignment: Alignment.center);
                             },
                             text: '加入购物车',
                           ),

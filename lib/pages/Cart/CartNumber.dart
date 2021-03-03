@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/model/CatProductModel.dart';
+import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:get/get.dart';
 
 class CartNumber extends StatelessWidget {
   CartNumberController vm = Get.put(CartNumberController());
+  CartServices cartServices = Get.find();
   Rx<CatProductModel> data;
   CartNumber(this.data);
   @override
@@ -33,6 +35,7 @@ class CartNumber extends StatelessWidget {
           data.update((val) {
             val.count--;
           });
+          cartServices.updataCartList();
         }
       },
     );
@@ -48,9 +51,7 @@ class CartNumber extends StatelessWidget {
         child: Text('+'),
       ),
       onTap: () {
-        data.update((val) {
-          val.count++;
-        });
+        cartServices.addCart(data.value);
       },
     );
   }

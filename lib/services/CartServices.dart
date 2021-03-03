@@ -24,13 +24,14 @@ class CartServices extends GetxService {
     super.onInit();
   }
 
-  addCart(ProductContentItem item) async {
+  addCart(item) async {
     //1.把对象转换成map类型的数据且筛选出有用的属性
 
     var cartProduct = formatCartData(item);
     setCartListData(cartProduct);
-    SmartDialog.showToast('添加成功', alignment: Alignment.center);
   }
+
+  // addCartFromCart(CatProductModel item) async {}
 
   getCartListData() async {
     var data = await Storage.getString('cartList');
@@ -60,9 +61,8 @@ class CartServices extends GetxService {
         await Storage.setString('cartList', json.encode(cartListData));
       } else {
         for (var i = 0; i < cartListData.length; i++) {
-          if (cartListData[i]['_id'] == cartListData[i]['_id'] &&
-              cartListData[i]['selectedAttr'] ==
-                  cartListData[i]['selectedAttr']) {
+          if (cartListData[i]['_id'] == value['_id'] &&
+              cartListData[i]['selectedAttr'] == value['selectedAttr']) {
             cartListData[i]['count']++;
             cartList[i].update((val) {
               val.count++;
@@ -79,7 +79,12 @@ class CartServices extends GetxService {
     }
   }
 
-  Map formatCartData(ProductContentItem item) {
+  updataCartList() async {
+    await Storage.setString('cartList',
+        json.encode(cartList.map((element) => element.value).toList()));
+  }
+
+  Map formatCartData(item) {
     final Map data = Map<String, dynamic>();
     data['_id'] = item.sId;
     data['title'] = item.title;
