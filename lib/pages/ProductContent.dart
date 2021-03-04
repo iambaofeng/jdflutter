@@ -90,15 +90,20 @@ class ProductContentPage extends StatelessWidget {
                           // color: Colors.red,
                           child: Row(
                             children: [
-                              Container(
-                                padding: EdgeInsets.only(top: setHeight(5)),
-                                width: setWidth(100),
-                                height: setHeight(88),
-                                child: Column(
-                                  children: [
-                                    Icon(Icons.shopping_cart),
-                                    Text('购物车')
-                                  ],
+                              InkWell(
+                                onTap: () {
+                                  Get.toNamed('cart');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(top: setHeight(5)),
+                                  width: setWidth(100),
+                                  height: setHeight(88),
+                                  child: Column(
+                                    children: [
+                                      Icon(Icons.shopping_cart),
+                                      Text('购物车')
+                                    ],
+                                  ),
                                 ),
                               ),
                               Expanded(

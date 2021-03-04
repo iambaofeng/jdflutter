@@ -149,6 +149,7 @@ class CartServices extends GetxService {
 
   void removeItem() {
     cartList.retainWhere((element) => !element.value.checked);
+    calculateSumPrice();
     updataCartList();
   }
 }
