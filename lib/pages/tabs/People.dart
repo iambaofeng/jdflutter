@@ -30,32 +30,37 @@ class PeoplePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Expanded(
-                //   child: Text(
-                //     '登录/注册',
-                //     style: TextStyle(color: Colors.white),
-                //   ),
-                //   flex: 1,
-                // )
-
                 Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '用户名：Administrator',
-                          style: TextStyle(
-                              color: Colors.white, fontSize: setFontSize(32)),
-                        ),
-                        Text(
-                          '普通会员',
-                          style: TextStyle(
-                              color: Colors.white, fontSize: setFontSize(20)),
-                        ),
-                      ],
-                    ))
+                  child: InkWell(
+                    onTap: () {
+                      Get.toNamed('loginPage');
+                    },
+                    child: Text(
+                      '登录/注册',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  flex: 1,
+                )
+
+                // Expanded(
+                //     flex: 1,
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(
+                //           '用户名：Administrator',
+                //           style: TextStyle(
+                //               color: Colors.white, fontSize: setFontSize(32)),
+                //         ),
+                //         Text(
+                //           '普通会员',
+                //           style: TextStyle(
+                //               color: Colors.white, fontSize: setFontSize(20)),
+                //         ),
+                //       ],
+                //     ))
               ],
             ),
           ),

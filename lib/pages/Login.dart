@@ -6,7 +6,12 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return null;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('登录页面'),
+      ),
+      body: Text('登录页面'),
+    );
   }
 }
 

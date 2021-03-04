@@ -1,3 +1,4 @@
+import 'package:flutter_jdshop/pages/Login.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
 import 'package:flutter_jdshop/pages/Search.dart';
@@ -16,5 +17,6 @@ var routes = [
   GetPage(name: 'Category', page: () => CategoryPage()),
   GetPage(name: 'productList', page: () => ProductListPage()),
   GetPage(name: 'search', page: () => SearchPage()),
-  GetPage(name: 'productContent', page: () => ProductContentPage())
+  GetPage(name: 'productContent', page: () => ProductContentPage()),
+  GetPage(name: 'loginPage', page: () => LoginPage())
 ];
