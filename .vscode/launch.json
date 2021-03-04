@@ -10,6 +10,28 @@
       "type": "dart",
       "program": "lib/main.dart",
       "args": ["--no-sound-null-safety"]
+    },
+    {
+      "name": "小米10pro",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--no-sound-null-safety"],
+      "deviceId": "Mi 10 Pro"
+    },
+    {
+      "name": "夜神模拟器",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--no-sound-null-safety"],
+      "deviceId": "TAS AN00"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "所有设备",
+      "configurations": ["小米10pro", "夜神模拟器"]
     }
   ]
 }

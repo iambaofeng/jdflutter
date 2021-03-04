@@ -45,12 +45,13 @@ class ProductContentFirst extends StatelessWidget {
       attrList.add(Wrap(
         children: [
           Container(
-            width: setWidth(100),
+            width: setWidth(110),
             child: Padding(
-              padding: EdgeInsets.only(top: setWidth(22)),
+              padding: EdgeInsets.only(top: setHeight(30)),
               child: Text(
-                element.cate,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                "${element.cate}:",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, fontSize: setFontSize(20)),
               ),
             ),
           ),
@@ -74,7 +75,7 @@ class ProductContentFirst extends StatelessWidget {
     SmartDialog.show(
       alignmentTemp: Alignment.bottomCenter,
       widget: Container(
-          height: setHeight(600),
+          height: setHeight(700),
           color: Colors.white,
           child: Stack(
             children: [
@@ -88,8 +89,8 @@ class ProductContentFirst extends StatelessWidget {
                               children: _getAttrWidget())),
                           Divider(),
                           Container(
-                            margin: EdgeInsets.only(top: 10),
-                            height: setHeight(80),
+                            margin: EdgeInsets.only(top: setHeight(10)),
+                            height: setHeight(100),
                             child: Row(
                               children: [
                                 Text('数量：'),
@@ -107,15 +108,18 @@ class ProductContentFirst extends StatelessWidget {
                         ),
                       ),
               ),
+              SizedBox(
+                height: setHeight(120),
+              ),
               Positioned(
                 width: setWidth(750),
-                height: setHeight(76),
+                height: setHeight(120),
                 child: Row(
                   children: [
                     Expanded(
                         flex: 1,
                         child: Container(
-                          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          margin: EdgeInsets.fromLTRB(setWidth(10), 0, 0, 0),
                           child: JdButton(
                             color: Color.fromRGBO(253, 1, 0, 0.9),
                             cb: () {
