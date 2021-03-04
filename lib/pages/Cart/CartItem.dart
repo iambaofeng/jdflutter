@@ -14,11 +14,11 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(setWidth(5)),
         height: setHeight(200),
         decoration: BoxDecoration(
-            border:
-                Border(bottom: BorderSide(width: 1, color: Colors.black12))),
+            border: Border(
+                bottom: BorderSide(width: setWidth(1), color: Colors.black12))),
         child: Row(
           children: [
             //单选
@@ -39,6 +39,7 @@ class CartItem extends StatelessWidget {
             //图片
             Container(
               width: setWidth(160),
+              padding: EdgeInsets.all(setWidth(10)),
               child: Image.network(
                 data.value.pic,
                 fit: BoxFit.cover,
@@ -48,7 +49,8 @@ class CartItem extends StatelessWidget {
             Expanded(
                 flex: 1,
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 5, 10),
+                  padding: EdgeInsets.fromLTRB(
+                      setWidth(10), setWidth(10), setWidth(5), setWidth(10)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,

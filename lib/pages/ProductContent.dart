@@ -80,7 +80,7 @@ class ProductContentPage extends StatelessWidget {
                     ),
                     Positioned(
                         width: setWidth(750),
-                        height: setHeight(80),
+                        height: setHeight(120),
                         bottom: 0,
                         child: Container(
                           decoration: BoxDecoration(
@@ -103,7 +103,11 @@ class ProductContentPage extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       Icon(Icons.shopping_cart),
-                                      Text('购物车')
+                                      Text(
+                                        '购物车',
+                                        style: TextStyle(
+                                            fontSize: setFontSize(20)),
+                                      )
                                     ],
                                   ),
                                 ),

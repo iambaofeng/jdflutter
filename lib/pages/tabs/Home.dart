@@ -54,7 +54,7 @@ class _HomeViewState extends State<HomeView>
 
   //热门推荐
   Widget _buildHotProductWarp() {
-    var warpItemWidth = (setWidth(getScreenWidth()) - setWidth(30)) / 2;
+    var warpItemWidth = (getScreenWidth() - setWidth(80)) / 3;
 
     List<Widget> gethotlist() {
       if (vm.hotproductList.length > 0) {
@@ -162,7 +162,8 @@ class _HomeViewState extends State<HomeView>
                   padding: EdgeInsets.only(top: setWidth(10)),
                   child: Text(
                     '￥${vm.gussproductList[index].price}',
-                    style: TextStyle(color: Colors.red),
+                    style:
+                        TextStyle(color: Colors.red, fontSize: setFontSize(22)),
                   ),
                 )
               ],
@@ -205,6 +206,7 @@ class _HomeViewState extends State<HomeView>
   //标题
   Widget _buildTitle(value) {
     return Container(
+      alignment: Alignment.centerLeft,
       height: setHeight(32),
       margin: EdgeInsets.fromLTRB(setWidth(20), 0, 0, 0),
       padding: EdgeInsets.fromLTRB(setWidth(20), 0, 0, 0),
@@ -213,7 +215,7 @@ class _HomeViewState extends State<HomeView>
               Border(left: BorderSide(color: Colors.red, width: setWidth(10)))),
       child: Text(
         value,
-        style: TextStyle(color: Colors.black54),
+        style: TextStyle(color: Colors.black54, fontSize: setFontSize(20)),
       ),
     );
   }

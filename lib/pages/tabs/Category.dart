@@ -78,7 +78,10 @@ class CategoryPage extends StatelessWidget {
                         )),
                     Container(
                       height: setHeight(28),
-                      child: Text(vm.rightCateList[index].title),
+                      child: Text(
+                        vm.rightCateList[index].title,
+                        style: TextStyle(fontSize: setFontSize(16)),
+                      ),
                     )
                   ],
                 ),
