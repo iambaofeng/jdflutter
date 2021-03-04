@@ -6,6 +6,7 @@ import 'package:flutter_jdshop/model/ProductContentModel.dart';
 import 'package:flutter_jdshop/pages/productContent/ProductContentFirst.dart';
 import 'package:flutter_jdshop/pages/productContent/ProductContentSecond.dart';
 import 'package:flutter_jdshop/pages/productContent/ProductContentThird.dart';
+import 'package:flutter_jdshop/pages/tabs/Cart.dart';
 import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/widgets/JDButtonWidget.dart';
 import 'package:flutter_jdshop/widgets/LoadingWidget.dart';
@@ -15,7 +16,7 @@ import 'package:get/get.dart';
 class ProductContentPage extends StatelessWidget {
   ProductContentController vm = Get.put(ProductContentController());
   CartServices cartServices = Get.find();
-
+  CartPageController cartPageController = Get.find();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -93,6 +94,7 @@ class ProductContentPage extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   Get.toNamed('cart');
+                                  cartPageController.isEdit.value = false;
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(top: setHeight(5)),
@@ -119,7 +121,7 @@ class ProductContentPage extends StatelessWidget {
                                       } else {
                                         cartServices.addCart(
                                             vm.productContentData.value);
-                                        SmartDialog.showToast('添加成功',
+                                        SmartDialog.showToast('加入购物车成功',
                                             alignment: Alignment.center);
                                         // print('无属性');
                                       }

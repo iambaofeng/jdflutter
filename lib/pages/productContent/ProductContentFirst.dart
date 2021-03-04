@@ -32,7 +32,11 @@ class ProductContentFirst extends StatelessWidget {
             },
             child: Chip(
               padding: EdgeInsets.all(10),
-              label: Text(item.value.title),
+              label: Text(
+                item.value.title,
+                style: TextStyle(
+                    color: item.value.checked ? Colors.white : Colors.black54),
+              ),
               backgroundColor: item.value.checked ? Colors.red : Colors.black26,
             ),
           ),
@@ -119,7 +123,7 @@ class ProductContentFirst extends StatelessWidget {
                                   .addCart(father.productContentData.value);
                               vm._getSelectedAttrValue();
                               SmartDialog.dismiss();
-                              SmartDialog.showToast('添加成功',
+                              SmartDialog.showToast('加入购物车成功',
                                   alignment: Alignment.center);
                             },
                             text: '加入购物车',
