@@ -66,7 +66,7 @@ class CartItem extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "${data.value.price}",
+                              "￥${data.value.price}",
                               style: TextStyle(color: Colors.red),
                             ),
                           ),

@@ -20,7 +20,13 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('购物车'),
-        actions: [IconButton(icon: Icon(Icons.launch), onPressed: () {})],
+        actions: [
+          IconButton(
+              icon: Icon(Icons.launch),
+              onPressed: () {
+                vm.isEdit.value = !vm.isEdit.value;
+              })
+        ],
       ),
       body: Obx(() => cartServices.cartList.length > 0
           ? Stack(
@@ -36,47 +42,105 @@ class CartPage extends StatelessWidget {
                   ],
                 ),
                 Positioned(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border(
-                            top: BorderSide(width: 1, color: Colors.black12))),
-                    child: Stack(
-                      children: [
-                        //左侧全选
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Row(
+                  child: vm.isEdit.value == false
+                      ? Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                  top: BorderSide(
+                                      width: 1, color: Colors.black12))),
+                          child: Stack(
                             children: [
-                              Container(
-                                width: setWidth(60),
-                                child: Checkbox(
-                                  value: cartServices.isCheckedAll.value,
-                                  onChanged: (value) {
-                                    cartServices.changeAllSelected();
-                                  },
-                                  activeColor: Colors.pink,
+                              //左侧全选
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: setWidth(60),
+                                      child: Checkbox(
+                                        value: cartServices.isCheckedAll.value,
+                                        onChanged: (value) {
+                                          cartServices.changeAllSelected();
+                                        },
+                                        activeColor: Colors.pink,
+                                      ),
+                                    ),
+                                    Text('全选'),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text('合计:'),
+                                    Text(
+                                      '￥${cartServices.allPrice.value}',
+                                      style: TextStyle(
+                                          color: Colors.red, fontSize: 20),
+                                    )
+                                  ],
                                 ),
                               ),
-                              Text('全选')
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: RaisedButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    '结算',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.red,
+                                ),
+                              )
                             ],
                           ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: RaisedButton(
-                            onPressed: () {},
-                            child: Text(
-                              '结算',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            color: Colors.red,
-                          ),
+                          // color: Colors.red,
                         )
-                      ],
-                    ),
-                    // color: Colors.red,
-                  ),
+                      : Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                  top: BorderSide(
+                                      width: 1, color: Colors.black12))),
+                          child: Stack(
+                            children: [
+                              //左侧全选
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: setWidth(60),
+                                      child: Checkbox(
+                                        value: cartServices.isCheckedAll.value,
+                                        onChanged: (value) {
+                                          cartServices.changeAllSelected();
+                                        },
+                                        activeColor: Colors.pink,
+                                      ),
+                                    ),
+                                    Text('全选'),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    cartServices.removeItem();
+                                  },
+                                  child: Text(
+                                    '删除',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.orange,
+                                ),
+                              )
+                            ],
+                          ),
+                          // color: Colors.red,
+                        ),
                   bottom: 0,
                   width: setWidth(750),
                   height: setHeight(78),
@@ -92,4 +156,5 @@ class CartPage extends StatelessWidget {
 
 class CartPageController extends GetxController {
   final _title = '购物车空空的.....'.obs;
+  final isEdit = false.obs;
 }

@@ -2,7 +2,7 @@ class CatProductModel {
   String sId;
   String title;
   String pic;
-  Object price;
+  double price;
   String selectedAttr;
   int count;
   bool checked;
@@ -19,7 +19,11 @@ class CatProductModel {
     sId = json['_id'];
     title = json['title'];
     pic = json['pic'];
-    price = json['price'];
+    if (json['price'] is int || json['price'] is double) {
+      price = json['price'].toDouble();
+    } else {
+      price = double.parse(json['price']);
+    }
     selectedAttr = json['selectedAttr'];
     count = json['count'];
     checked = json['checked'];

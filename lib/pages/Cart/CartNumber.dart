@@ -51,7 +51,10 @@ class CartNumber extends StatelessWidget {
         child: Text('+'),
       ),
       onTap: () {
-        cartServices.addCart(data.value);
+        data.update((val) {
+          val.count++;
+        });
+        cartServices.updataCartList();
       },
     );
   }

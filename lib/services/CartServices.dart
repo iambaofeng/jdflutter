@@ -12,6 +12,7 @@ class CartServices extends GetxService {
   final productAttrBottomSheet = false.obs;
   final cartList = <Rx<CatProductModel>>[].obs;
   final isCheckedAll = false.obs;
+  final allPrice = 0.0.obs;
   @override
   void onInit() async {
     // TODO: implement onInit
@@ -21,6 +22,7 @@ class CartServices extends GetxService {
       cartList.add(CatProductModel.fromJson(item).obs);
     });
     checkAllChecked();
+    calculateSumPrice();
     super.onInit();
   }
 
@@ -75,18 +77,25 @@ class CartServices extends GetxService {
       tempList.add(value);
       await Storage.setString('cartList', json.encode(tempList));
     }
+    calculateSumPrice();
   }
 
+  //更新数量
   updataCartList() async {
     await Storage.setString('cartList',
         json.encode(cartList.map((element) => element.value).toList()));
+    calculateSumPrice();
   }
 
   Map formatCartData(item) {
     final Map data = Map<String, dynamic>();
     data['_id'] = item.sId;
     data['title'] = item.title;
-    data['price'] = item.price;
+    if (item.price is int || item.price is double) {
+      data['price'] = item.price.toDouble();
+    } else {
+      data['price'] = double.parse(item.price);
+    }
     data['selectedAttr'] = item.selectedAttr;
     data['count'] = item.count;
     data['pic'] = item.pic;
@@ -101,6 +110,17 @@ class CartServices extends GetxService {
     } else {
       isCheckedAll.value = true;
     }
+    calculateSumPrice();
+  }
+
+  //重新计算总价
+  void calculateSumPrice() {
+    allPrice.value = 0.0;
+    cartList.forEach((element) {
+      if (element.value.checked) {
+        allPrice.value += element.value.price * element.value.count;
+      }
+    });
   }
 
   //全选、反选
@@ -121,6 +141,14 @@ class CartServices extends GetxService {
       isCheckedAll.value = true;
     }
     // print(json.encode(cartList));
+    updataCartList();
+    calculateSumPrice();
+  }
+
+  //删除数据
+
+  void removeItem() {
+    cartList.retainWhere((element) => !element.value.checked);
     updataCartList();
   }
 }
