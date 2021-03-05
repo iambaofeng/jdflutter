@@ -28,7 +28,7 @@ class ProductContentItem {
   String oldPrice;
   Object isBest;
   Object isHot;
-  String isNew;
+  Object isNew;
   String status;
   String pic;
   String content;

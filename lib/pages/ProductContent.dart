@@ -60,8 +60,13 @@ class ProductContentPage extends StatelessWidget {
                               children: [Icon(Icons.home), Text('首页')],
                             )),
                             PopupMenuItem(
-                                child: Row(
-                              children: [Icon(Icons.search), Text('搜索')],
+                                child: InkWell(
+                              onTap: () {
+                                Get.toNamed('search');
+                              },
+                              child: Row(
+                                children: [Icon(Icons.search), Text('搜索')],
+                              ),
                             )),
                           ]);
                     })

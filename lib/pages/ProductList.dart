@@ -36,70 +36,79 @@ class ProductListPage extends StatelessWidget {
             controller: vm._scrollController,
             itemBuilder: (conext, index) {
               return Column(children: [
-                Row(
-                  children: [
-                    Container(
-                      width: setWidth(180),
-                      height: setWidth(180),
-                      child: Image.network(
-                        vm._productList[index].sPic,
-                        fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                    Get.toNamed('/productContent',
+                        arguments: {'id': vm._productList[index].sId});
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: setWidth(180),
+                        height: setWidth(180),
+                        child: Image.network(
+                          vm._productList[index].sPic,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: Container(
-                          margin: EdgeInsets.only(left: setWidth(10)),
-                          height: setWidth(180),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                vm._productList[index].title,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: setHeight(36),
-                                    margin:
-                                        EdgeInsets.only(right: setWidth(10)),
-                                    padding: EdgeInsets.fromLTRB(
-                                        setWidth(10), 0, setWidth(10), 0),
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(setWidth(10)),
-                                      color: Color.fromRGBO(230, 230, 230, 0.9),
+                      Expanded(
+                          flex: 1,
+                          child: Container(
+                            margin: EdgeInsets.only(left: setWidth(10)),
+                            height: setWidth(180),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  vm._productList[index].title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: setHeight(36),
+                                      margin:
+                                          EdgeInsets.only(right: setWidth(10)),
+                                      padding: EdgeInsets.fromLTRB(
+                                          setWidth(10), 0, setWidth(10), 0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(setWidth(10)),
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 0.9),
+                                      ),
+                                      child: Text('4g'),
                                     ),
-                                    child: Text('4g'),
-                                  ),
-                                  Container(
-                                    height: setHeight(36),
-                                    margin:
-                                        EdgeInsets.only(right: setWidth(10)),
-                                    padding: EdgeInsets.fromLTRB(
-                                        setWidth(10), 0, setWidth(10), 0),
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(setWidth(10)),
-                                      color: Color.fromRGBO(230, 230, 230, 0.9),
-                                    ),
-                                    child: Text('128g'),
-                                  )
-                                ],
-                              ),
-                              Text(
-                                '￥${vm._productList[index].price.toString()}',
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 16),
-                              )
-                            ],
-                          ),
-                          // color: Colors.red,
-                        ))
-                  ],
+                                    Container(
+                                      height: setHeight(36),
+                                      margin:
+                                          EdgeInsets.only(right: setWidth(10)),
+                                      padding: EdgeInsets.fromLTRB(
+                                          setWidth(10), 0, setWidth(10), 0),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(setWidth(10)),
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 0.9),
+                                      ),
+                                      child: Text('128g'),
+                                    )
+                                  ],
+                                ),
+                                Text(
+                                  '￥${vm._productList[index].price.toString()}',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: setFontSize(26)),
+                                )
+                              ],
+                            ),
+                            // color: Colors.red,
+                          ))
+                    ],
+                  ),
                 ),
                 Divider(
                   height: setWidth(20),
@@ -178,6 +187,7 @@ class ProductListPage extends StatelessWidget {
     return Scaffold(
         key: vm._scaffoldkey,
         appBar: AppBar(
+          leading: BackButton(),
           title: Container(
             height: setHeight(68),
             decoration: BoxDecoration(

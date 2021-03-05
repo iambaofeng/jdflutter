@@ -145,28 +145,35 @@ class _HomeViewState extends State<HomeView>
           // shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return Column(
-              // mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: setWidth(20)),
-                  child: Image.network(
-                    vm.gussproductList[index].sPic,
-                    fit: BoxFit.cover,
-                    height: setHeight(140),
-                    width: setWidth(140),
+            return InkWell(
+              onTap: () {
+                print(123);
+                Get.toNamed('/productContent',
+                    arguments: {'id': vm.gussproductList[index].sId});
+              },
+              child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: setWidth(20)),
+                    child: Image.network(
+                      vm.gussproductList[index].sPic,
+                      fit: BoxFit.cover,
+                      height: setHeight(140),
+                      width: setWidth(140),
+                    ),
                   ),
-                ),
-                Container(
-                  height: setHeight(44),
-                  padding: EdgeInsets.only(top: setWidth(10)),
-                  child: Text(
-                    '￥${vm.gussproductList[index].price}',
-                    style:
-                        TextStyle(color: Colors.red, fontSize: setFontSize(22)),
-                  ),
-                )
-              ],
+                  Container(
+                    height: setHeight(44),
+                    padding: EdgeInsets.only(top: setWidth(10)),
+                    child: Text(
+                      '￥${vm.gussproductList[index].price}',
+                      style: TextStyle(
+                          color: Colors.red, fontSize: setFontSize(22)),
+                    ),
+                  )
+                ],
+              ),
             );
           },
           itemCount: 10,

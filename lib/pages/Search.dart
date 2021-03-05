@@ -7,6 +7,22 @@ import 'package:get/get.dart';
 class SearchPage extends StatelessWidget {
   SearchPageController vm = Get.put(SearchPageController());
 
+  Widget hotWords(String item) {
+    return InkWell(
+      onTap: () {
+        Get.offNamed('/productList', arguments: {'search': item});
+      },
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Color.fromRGBO(233, 233, 233, 0.9),
+            borderRadius: BorderRadius.circular(10)),
+        child: Text(item),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _showAlertDialog(keywords) async {
@@ -149,58 +165,7 @@ class SearchPage extends StatelessWidget {
                 ),
               ),
               Divider(),
-              Wrap(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(233, 233, 233, 0.9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text('笔记本'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(233, 233, 233, 0.9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text('小米10pro'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(233, 233, 233, 0.9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text('华为p40pro'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(233, 233, 233, 0.9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text('联想拯救者r700p'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(233, 233, 233, 0.9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text('Iphone12mimi'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(233, 233, 233, 0.9),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text('兰蔻'),
-                  ),
-                ],
-              ),
+              Wrap(children: vm._hosKeyWords.map((e) => hotWords(e)).toList()),
               Obx(() => _historyListWidget())
             ],
           ),
@@ -213,6 +178,7 @@ class SearchPage extends StatelessWidget {
 class SearchPageController extends GetxController {
   String _keywords = '';
   final _historyListData = [].obs;
+  List<String> _hosKeyWords = ['笔记本', '女装', '手机', "衣服"];
   @override
   void onInit() {
     // TODO: implement onInit
