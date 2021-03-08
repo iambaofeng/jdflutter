@@ -133,7 +133,7 @@ class RegisterSecondPageController extends GetxController {
     if (response.data['success']) {
       SmartDialog.showToast('验证成功',
           alignment: Alignment.center, time: Duration(milliseconds: 3000));
-      Get.toNamed('registerThird');
+      Get.toNamed('/registerThird');
     } else {
       SmartDialog.showToast(response.data['message'],
           alignment: Alignment.center);

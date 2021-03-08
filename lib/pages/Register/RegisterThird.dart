@@ -92,7 +92,7 @@ class RegisterThirdPageController extends GetxController {
       userServices.setUserInfoData(response.data['userinfo'][0]);
       tabsController.currentIndex.value = 0;
       //保存用户信息，返回到根
-      Get.offAllNamed('/home');
+      Get.offAllNamed('/');
     } else {
       SmartDialog.showToast(response.data['message'],
           alignment: Alignment.center);

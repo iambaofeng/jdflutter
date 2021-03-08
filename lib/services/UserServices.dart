@@ -27,4 +27,9 @@ class UserServices extends GetxService {
 
     await Storage.setString('userinfo', json.encode(data));
   }
+
+  loginOut() async {
+    await Storage.remove('userinfo');
+    userinfo(UserInfoModel());
+  }
 }

@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: InkWell(
                       onTap: () {
-                        Get.toNamed('registerFirst');
+                        Get.toNamed('/registerFirst');
                       },
                       child: Text('新用户注册'),
                     ),

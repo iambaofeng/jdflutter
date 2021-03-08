@@ -68,7 +68,7 @@ class RegisterFirstPageController extends GetxController {
       if (response.data['success']) {
         SmartDialog.showToast('手机验证码是${response.data["code"]}',
             alignment: Alignment.center, time: Duration(milliseconds: 3000));
-        Get.toNamed('registerSecond');
+        Get.toNamed('/registerSecond');
       } else {
         SmartDialog.showToast(response.data['message'],
             alignment: Alignment.center);

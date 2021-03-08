@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/services/UserServices.dart';
+import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:get/get.dart';
 
 class PeoplePage extends StatelessWidget {
@@ -35,7 +36,7 @@ class PeoplePage extends StatelessWidget {
                       ? Expanded(
                           child: InkWell(
                             onTap: () {
-                              Get.toNamed('loginPage');
+                              Get.toNamed('/loginPage');
                             },
                             child: Text(
                               '登录/注册',
@@ -109,6 +110,12 @@ class PeoplePage extends StatelessWidget {
             title: Text('在线客服'),
           ),
           Divider(),
+          JdButton(
+            text: '退出登录',
+            cb: () {
+              userServices.loginOut();
+            },
+          )
         ],
       ),
     );
