@@ -8,9 +8,13 @@ class JdButton extends StatelessWidget {
   final Color color;
   final String text;
   final Object cb;
-
+  final double height;
   JdButton(
-      {Key key, this.color = Colors.black, this.text = '按钮', this.cb = null})
+      {Key key,
+      this.color = Colors.black,
+      this.text = '按钮',
+      this.cb = null,
+      this.height = 68})
       : super(key: key);
 
   @override
@@ -20,7 +24,7 @@ class JdButton extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.all(5),
         padding: EdgeInsets.all(5),
-        height: setHeight(68),
+        height: setHeight(height),
         decoration: BoxDecoration(
             color: this.color, borderRadius: BorderRadius.circular(10)),
         child: Center(

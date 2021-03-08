@@ -18,21 +18,22 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        //设计稿的宽度和高度
-        //是否随系统字体缩放
+      //设计稿的宽度和高度
+      //是否随系统字体缩放
 
-        designSize: Size(750, 1334),
-        allowFontScaling: false,
-        child: GetMaterialApp(
-            // smartManagement: SmartManagement.keepFactory,
-            initialRoute: '/',
-            getPages: routes,
-            theme: ThemeData(primaryColor: Colors.white),
-            debugShowCheckedModeBanner: false,
-            builder: (BuildContext context, Widget child) {
-              return FlutterSmartDialog(child: child);
-            },
-            initialBinding: ServicesBind()));
+      designSize: Size(750, 1334),
+      allowFontScaling: false,
+      builder: () => GetMaterialApp(
+          // smartManagement: SmartManagement.keepFactory,
+          initialRoute: '/',
+          getPages: routes,
+          theme: ThemeData(primaryColor: Colors.white),
+          debugShowCheckedModeBanner: false,
+          builder: (BuildContext context, Widget child) {
+            return FlutterSmartDialog(child: child);
+          },
+          initialBinding: ServicesBind()),
+    );
   }
 }
 

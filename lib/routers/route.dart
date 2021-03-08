@@ -1,6 +1,9 @@
 import 'package:flutter_jdshop/pages/Login.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
+import 'package:flutter_jdshop/pages/Register/RegisterFirst.dart';
+import 'package:flutter_jdshop/pages/Register/RegisterSecond.dart';
+import 'package:flutter_jdshop/pages/Register/RegisterThird.dart';
 import 'package:flutter_jdshop/pages/Search.dart';
 import 'package:flutter_jdshop/pages/Tab.dart';
 import 'package:flutter_jdshop/pages/tabs/Cart.dart';
@@ -18,5 +21,8 @@ var routes = [
   GetPage(name: 'productList', page: () => ProductListPage()),
   GetPage(name: 'search', page: () => SearchPage()),
   GetPage(name: 'productContent', page: () => ProductContentPage()),
-  GetPage(name: 'loginPage', page: () => LoginPage())
+  GetPage(name: 'loginPage', page: () => LoginPage()),
+  GetPage(name: 'registerFirst', page: () => RegisterFirstPage()),
+  GetPage(name: 'registerSecond', page: () => RegisterSecondPage()),
+  GetPage(name: 'registerThird', page: () => RegisterThirdPage()),
 ];

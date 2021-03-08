@@ -17,6 +17,7 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build购物车页面了');
     return Scaffold(
       appBar: AppBar(
         title: Text('购物车'),

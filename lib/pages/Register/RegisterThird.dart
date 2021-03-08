@@ -1,0 +1,82 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/pages/Register/RegisterFirst.dart';
+import 'package:flutter_jdshop/pages/Register/RegisterSecond.dart';
+import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
+import 'package:flutter_jdshop/widgets/jdTextWidget.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:get/get.dart';
+
+class RegisterThirdPage extends StatelessWidget {
+  final RegisterThirdPageController vm = Get.put(RegisterThirdPageController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('用户注册-第三步'),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        child: ListView(
+          children: [
+            SizedBox(
+              height: setHeight(50),
+            ),
+            jdText(
+                text: '请输入密码',
+                isPassword: true,
+                onChanged: (value) {
+                  vm.password = value;
+                }),
+            SizedBox(
+              height: setHeight(50),
+            ),
+            jdText(
+                text: '请输入确认密码',
+                isPassword: true,
+                onChanged: (value) {
+                  vm.checkPassword = value;
+                }),
+            SizedBox(
+              height: setHeight(50),
+            ),
+            JdButton(
+              text: '注册并登录',
+              color: Colors.pink,
+              height: 74,
+              cb: () {
+                vm.register();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterThirdPageController extends GetxController {
+  RegisterFirstPageController first = Get.find();
+  RegisterSecondPageController second = Get.find();
+
+  String password = '';
+  String checkPassword = '';
+
+  void register() async {
+    String api = "${Config.domain}api/validateCode";
+    var response = await Dio().post(api,
+        data: {"tel": first.tel, 'code': second.code, 'password': password});
+
+    if (response.data['success']) {
+      SmartDialog.showToast('注册成功',
+          alignment: Alignment.center, time: Duration(milliseconds: 3000));
+      Get.toNamed('login');
+    } else {
+      SmartDialog.showToast(response.data['message'],
+          alignment: Alignment.center);
+    }
+  }
+}

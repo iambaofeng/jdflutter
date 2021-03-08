@@ -6,6 +6,7 @@ import 'package:flutter_jdshop/model/FocusModel.dart';
 import 'package:flutter_jdshop/model/ProductModel.dart';
 import 'package:flutter_jdshop/services/SearchServices.dart';
 import 'package:flutter_jdshop/widgets/AppbarWidget.dart';
+import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
