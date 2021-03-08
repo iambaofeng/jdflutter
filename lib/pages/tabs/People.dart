@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:get/get.dart';
 
 class PeoplePage extends StatelessWidget {
   PeoplePageController vm = Get.put(PeoplePageController());
-
+  UserServices userServices = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,52 +18,53 @@ class PeoplePage extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage('images/user_bg.jpg'),
                     fit: BoxFit.cover)),
-            child: Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(setWidth(10), 0, setWidth(10), 0),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'images/user.png',
-                      fit: BoxFit.cover,
-                      height: setHeight(100),
-                      width: setWidth(100),
+            child: Obx(() => Row(children: [
+                  Container(
+                    margin:
+                        EdgeInsets.fromLTRB(setWidth(10), 0, setWidth(10), 0),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'images/user.png',
+                        fit: BoxFit.cover,
+                        height: setHeight(100),
+                        width: setWidth(100),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed('loginPage');
-                    },
-                    child: Text(
-                      '登录/注册',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  flex: 1,
-                )
-
-                // Expanded(
-                //     flex: 1,
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Text(
-                //           '用户名：Administrator',
-                //           style: TextStyle(
-                //               color: Colors.white, fontSize: setFontSize(32)),
-                //         ),
-                //         Text(
-                //           '普通会员',
-                //           style: TextStyle(
-                //               color: Colors.white, fontSize: setFontSize(20)),
-                //         ),
-                //       ],
-                //     ))
-              ],
-            ),
+                  userServices.userinfo.value.tel == null
+                      ? Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              Get.toNamed('loginPage');
+                            },
+                            child: Text(
+                              '登录/注册',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          flex: 1,
+                        )
+                      : Expanded(
+                          flex: 1,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '用户名：${userServices.userinfo.value.tel}',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: setFontSize(32)),
+                              ),
+                              Text(
+                                '普通会员',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: setFontSize(20)),
+                              ),
+                            ],
+                          ))
+                ])),
           ),
           ListTile(
             leading: Icon(
