@@ -300,7 +300,7 @@ class ProductListPageController extends GetxController {
   //切换二级菜单方法
   void _subHeaderChange(id) {
     if (id == 4) {
-      _scaffoldkey.currentState.openEndDrawer();
+      _scaffoldkey.currentState?.openEndDrawer();
       _selectHeaderId.value = id;
     } else {
       _selectHeaderId.value = id;

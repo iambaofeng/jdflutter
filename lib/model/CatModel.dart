@@ -1,36 +1,41 @@
 class CatModel {
-  List<CatItemModel> result;
+  List<CatItemModel> result = [];
 
-  CatModel({this.result});
+  CatModel({required this.result});
 
   CatModel.fromJson(Map<String, dynamic> json) {
     if (json['result'] != null) {
-      result = new List<CatItemModel>();
+      result = <CatItemModel>[];
       json['result'].forEach((v) {
         result.add(new CatItemModel.fromJson(v));
       });
+    } else {
+      result = <CatItemModel>[];
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result.map((v) => v.toJson()).toList();
-    }
+    data['result'] = this.result.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
 class CatItemModel {
-  String sId;
-  String title;
-  Object status;
-  String pic;
-  String pid;
-  String sort;
+  late String sId;
+  late String title;
+  late Object status;
+  late String pic;
+  late String pid;
+  late String sort;
 
   CatItemModel(
-      {this.sId, this.title, this.status, this.pic, this.pid, this.sort});
+      {this.sId = '',
+      this.title = '',
+      this.status = '',
+      this.pic = '',
+      this.pid = '',
+      this.sort = ''});
 
   CatItemModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

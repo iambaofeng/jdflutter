@@ -1,3 +1,7 @@
+import 'package:flutter_jdshop/pages/Address/AddressList.dart';
+import 'package:flutter_jdshop/pages/Address/AddressAdd.dart';
+import 'package:flutter_jdshop/pages/Address/AddressEdit.dart';
+import 'package:flutter_jdshop/pages/CheckOut.dart';
 import 'package:flutter_jdshop/pages/Login.dart';
 import 'package:flutter_jdshop/pages/ProductContent.dart';
 import 'package:flutter_jdshop/pages/ProductList.dart';
@@ -25,4 +29,8 @@ var routes = [
   GetPage(name: '/registerFirst', page: () => RegisterFirstPage()),
   GetPage(name: '/registerSecond', page: () => RegisterSecondPage()),
   GetPage(name: '/registerThird', page: () => RegisterThirdPage()),
+  GetPage(name: '/checkOut', page: () => CheckOutPage()),
+  GetPage(name: '/addressList', page: () => AddressListPage()),
+  GetPage(name: '/addressAdd', page: () => AddressAddPage()),
+  GetPage(name: '/addressEdit', page: () => AddressEditPage()),
 ];

@@ -297,7 +297,7 @@ class ProductContentFirstController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    dataList = father.productContentData.value.attr ?? [];
+    dataList = father.productContentData.value.attr;
     //商品属性默认选第一个
     dataList.forEach((element) {
       element.attrlist[0].value.checked = true;

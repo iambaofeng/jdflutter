@@ -12,7 +12,7 @@ class Storage {
     if (sp.containsKey(key)) {
       return sp.getString(key);
     } else {
-      return null;
+      return '';
     }
   }
 

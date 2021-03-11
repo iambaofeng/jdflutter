@@ -46,7 +46,7 @@ class Tabs extends StatelessWidget {
 class TabsController extends GetxController {
   var title = 'jdshop'.obs;
   var currentIndex = 0.obs;
-  PageController _pageController;
+  late PageController _pageController;
   List pageList = [HomePage(), CategoryPage(), CartPage(), PeoplePage()];
 
   void changeCurrentIndex(index) {

@@ -5,6 +5,7 @@ import 'package:flutter_jdshop/config/Config.dart';
 import 'package:flutter_jdshop/model/FocusModel.dart';
 import 'package:flutter_jdshop/model/ProductModel.dart';
 import 'package:flutter_jdshop/services/SearchServices.dart';
+import 'package:flutter_jdshop/services/SignServices.dart';
 import 'package:flutter_jdshop/widgets/AppbarWidget.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 import 'package:get/get.dart';
@@ -14,12 +15,12 @@ class HomePage extends StatelessWidget {
   HomePageController vm = Get.put(HomePageController());
   @override
   Widget build(BuildContext context) {
-    return HomeView();
+    return HomeView(key: GlobalKey());
   }
 }
 
 class HomeView extends StatefulWidget {
-  HomeView({Key key}) : super(key: key);
+  HomeView({required Key key}) : super(key: key);
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -234,7 +235,7 @@ class HomePageController extends GetxController {
   var gussproductList = <ProductItemModel>[].obs;
   var hotproductList = <ProductItemModel>[].obs;
   var focusData = [].obs;
-
+  SignServices signServices = Get.find();
   //获取轮播图
   void _getFocusData() async {
     var api = '${Config.domain}api/focus';
@@ -287,5 +288,6 @@ class HomePageController extends GetxController {
     _getFocusData();
     _getGuessYouLikeData();
     _getHotProductData();
+    signServices.getSign('123');
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/pages/Cart/CartItem.dart';
 import 'package:flutter_jdshop/services/CartServices.dart';
+import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:flutter_jdshop/widgets/AppbarWidget.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class CartPage extends StatelessWidget {
@@ -82,13 +84,19 @@ class CartPage extends StatelessWidget {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: RaisedButton(
-                                  onPressed: () {},
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    vm.doCheckOut();
+                                  },
                                   child: Text(
                                     '结算',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  color: Colors.red,
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.red)),
+                                  // color: Colors.red,
                                 ),
                               )
                             ],
@@ -127,7 +135,7 @@ class CartPage extends StatelessWidget {
                               ),
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: RaisedButton(
+                                child: ElevatedButton(
                                   onPressed: () {
                                     cartServices.removeItem();
                                   },
@@ -135,7 +143,11 @@ class CartPage extends StatelessWidget {
                                     '删除',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  color: Colors.orange,
+                                  // color: Colors.orange,
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.orange)),
                                 ),
                               )
                             ],
@@ -158,4 +170,22 @@ class CartPage extends StatelessWidget {
 class CartPageController extends GetxController {
   final _title = '购物车空空的.....'.obs;
   final isEdit = false.obs;
+  CartServices cartServices = Get.find();
+  UserServices userServices = Get.find();
+
+//去结算
+  doCheckOut() {
+    if (userServices.userinfo.value.tel == null) {
+      SmartDialog.showToast('还未登录请先登录',
+          alignment: Alignment.center, time: Duration(milliseconds: 3000));
+
+      Get.toNamed('/login');
+    } else if (cartServices.cartList
+        .every((element) => element.value.checked == false)) {
+      SmartDialog.showToast('购物车没有选择的商品',
+          alignment: Alignment.center, time: Duration(milliseconds: 3000));
+    } else {
+      Get.toNamed('/checkOut');
+    }
+  }
 }

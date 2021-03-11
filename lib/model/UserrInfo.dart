@@ -1,10 +1,14 @@
 class UserInfoModel {
-  String sId;
-  String username;
-  String tel;
-  String salt;
+  late String sId;
+  late String username;
+  late String tel;
+  late String salt;
 
-  UserInfoModel({this.sId, this.username, this.tel, this.salt});
+  UserInfoModel(
+      {required this.sId,
+      required this.username,
+      required this.tel,
+      required this.salt});
 
   UserInfoModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

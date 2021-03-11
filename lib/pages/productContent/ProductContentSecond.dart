@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
 import '../ProductContent.dart';
@@ -21,7 +21,10 @@ class ProductContentSecondState extends State<ProductContentSecond>
       child: Column(
         children: [
           Expanded(
-            child: InAppWebView(initialUrl: vm._url),
+            child: Text('webview'),
+            // child: InAppWebView(
+            //     key: GlobalKey(),
+            //     initialUrlRequest: URLRequest(url: Uri.parse(vm._url))),
           )
         ],
       ),

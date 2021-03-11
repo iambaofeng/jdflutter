@@ -1,7 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:flutter_jdshop/widgets/jdTextWidget.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
@@ -40,7 +44,8 @@ class LoginPage extends StatelessWidget {
                 text: '请输入用户名',
                 isPassword: false,
                 onChanged: (value) {
-                  print(value);
+                  vm.username = value;
+                  // print(value);
                 }),
             SizedBox(
               height: setHeight(20),
@@ -49,7 +54,8 @@ class LoginPage extends StatelessWidget {
               text: '请输入密码',
               isPassword: true,
               onChanged: (value) {
-                print(value);
+                vm.password = value;
+                // print(value);
               },
             ),
             SizedBox(
@@ -79,7 +85,9 @@ class LoginPage extends StatelessWidget {
               text: '登录',
               color: Colors.pink,
               height: 74,
-              cb: () {},
+              cb: () {
+                vm.login();
+              },
             ),
           ],
         ),
@@ -88,4 +96,38 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class LoginPageController extends GetxController {}
+class LoginPageController extends GetxController {
+  String username = '';
+  String password = '';
+
+  UserServices userServices = Get.find();
+
+  login() async {
+    RegExp reg = RegExp(r"^1\d{10}$");
+
+    if (!reg.hasMatch(username)) {
+      SmartDialog.showToast('手机格式不正确',
+          alignment: Alignment.center, time: Duration(milliseconds: 3000));
+    } else if (password.length < 6) {
+      SmartDialog.showToast('密码不正确',
+          alignment: Alignment.center, time: Duration(milliseconds: 3000));
+    } else {
+      String api = "${Config.domain}api/doLogin";
+      var response = await Dio()
+          .post(api, data: {"username": username, 'password': password});
+
+      if (response.data['success']) {
+        SmartDialog.showToast('登陆成功',
+            alignment: Alignment.center, time: Duration(milliseconds: 3000));
+
+        userServices.setUserInfoData(response.data['userinfo'][0]);
+        // tabsController.currentIndex.value = 0;
+        //保存用户信息，返回到根
+        Get.back();
+      } else {
+        SmartDialog.showToast(response.data['message'],
+            alignment: Alignment.center);
+      }
+    }
+  }
+}

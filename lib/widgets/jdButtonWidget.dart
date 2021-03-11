@@ -7,15 +7,13 @@ class JdButton extends StatelessWidget {
 
   final Color color;
   final String text;
-  final Object cb;
+  final void Function()? cb;
   final double height;
   JdButton(
-      {Key key,
-      this.color = Colors.black,
+      {this.color = Colors.black,
       this.text = '按钮',
       this.cb = null,
-      this.height = 68})
-      : super(key: key);
+      this.height = 68});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:flutter_jdshop/services/Storage.dart';
 import 'package:get/get.dart';
 
 class UserServices extends GetxService {
-  final userinfo = UserInfoModel().obs;
+  final userinfo = UserInfoModel(sId: '', salt: "", tel: "", username: "").obs;
 
   @override
   void onInit() {
@@ -15,9 +15,9 @@ class UserServices extends GetxService {
 
   getUserInfoData() async {
     var data = await Storage.getString('userinfo');
-    if (data != null) {
+    if (data != '') {
       //有数据
-      Map res = json.decode(data);
+      Map<String, dynamic> res = json.decode(data);
       userinfo(UserInfoModel.fromJson(res));
     }
   }
@@ -30,6 +30,6 @@ class UserServices extends GetxService {
 
   loginOut() async {
     await Storage.remove('userinfo');
-    userinfo(UserInfoModel());
+    userinfo(UserInfoModel(sId: '', salt: "", tel: "", username: ""));
   }
 }

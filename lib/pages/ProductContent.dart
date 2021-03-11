@@ -168,7 +168,26 @@ class ProductContentPage extends StatelessWidget {
 
 class ProductContentController extends GetxController {
   String _id = '';
-  final productContentData = ProductContentItem().obs;
+  final productContentData = ProductContentItem(
+          attr: [],
+          sId: "",
+          title: "",
+          price: 0,
+          oldPrice: "",
+          isBest: "",
+          isHot: "",
+          isNew: "",
+          content: '',
+          status: "",
+          subTitle: "",
+          salecount: 0,
+          selectedAttr: "",
+          count: 0,
+          checked: false,
+          cname: '',
+          cid: "",
+          pic: "")
+      .obs;
 
   @override
   void onInit() {

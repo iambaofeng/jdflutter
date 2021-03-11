@@ -1,11 +1,11 @@
 class ProductModel {
-  List<ProductItemModel> result;
+  List<ProductItemModel> result = [];
 
-  ProductModel({this.result});
+  ProductModel({required this.result});
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     if (json['result'] != null) {
-      result = new List<ProductItemModel>();
+      // result = <ProductItemModel>[];
       json['result'].forEach((v) {
         result.add(new ProductItemModel.fromJson(v));
       });
@@ -14,30 +14,28 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result.map((v) => v.toJson()).toList();
-    }
+    data['result'] = this.result.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
 class ProductItemModel {
-  String sId;
-  String title;
-  String cid;
-  Object price; //所有的类型都继承 Object
-  String oldPrice;
-  String pic;
-  String sPic;
+  late String sId;
+  late String title;
+  late String cid;
+  late Object price; //所有的类型都继承 Object
+  late String oldPrice;
+  late String pic;
+  late String sPic;
 
   ProductItemModel(
-      {this.sId,
-      this.title,
-      this.cid,
-      this.price,
-      this.oldPrice,
-      this.pic,
-      this.sPic});
+      {required this.sId,
+      required this.title,
+      required this.cid,
+      required this.price,
+      required this.oldPrice,
+      required this.pic,
+      required this.sPic});
 
   ProductItemModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

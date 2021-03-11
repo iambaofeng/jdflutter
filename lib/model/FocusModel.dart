@@ -1,10 +1,10 @@
 // FocusModel.fromJson(json);
 class FocusModel {
-  List<FocusItemModel> result;
-  FocusModel({this.result});
+  List<FocusItemModel> result = [];
+  FocusModel({required this.result});
   FocusModel.fromJson(Map<String, dynamic> json) {
     if (json['result'] != null) {
-      result = new List<FocusItemModel>();
+      // result = <FocusItemModel>[];
       json['result'].forEach((v) {
         result.add(new FocusItemModel.fromJson(v));
       });
@@ -13,21 +13,24 @@ class FocusModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result.map((v) => v.toJson()).toList();
-    }
+    data['result'] = this.result.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
 class FocusItemModel {
-  String sId;
-  String title;
-  String status;
-  String pic;
-  String url;
+  late String sId;
+  late String title;
+  late String status;
+  late String pic;
+  late String url;
 
-  FocusItemModel({this.sId, this.title, this.status, this.pic, this.url});
+  FocusItemModel(
+      {required this.sId,
+      required this.title,
+      required this.status,
+      required this.pic,
+      required this.url});
   FocusItemModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];

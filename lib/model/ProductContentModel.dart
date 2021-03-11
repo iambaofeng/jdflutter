@@ -1,63 +1,97 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class ProductContentModel {
-  ProductContentItem result;
+  ProductContentItem result = ProductContentItem(
+      attr: [],
+      sId: "",
+      title: "",
+      price: 0,
+      oldPrice: "",
+      isBest: "",
+      isHot: "",
+      isNew: "",
+      content: '',
+      status: "",
+      subTitle: "",
+      salecount: 0,
+      selectedAttr: "",
+      count: 0,
+      checked: false,
+      cname: '',
+      cid: "",
+      pic: "");
 
-  ProductContentModel({this.result});
+  ProductContentModel({required this.result});
 
   ProductContentModel.fromJson(Map<String, dynamic> json) {
     result = json['result'] != null
         ? new ProductContentItem.fromJson(json['result'])
-        : null;
+        : ProductContentItem(
+            attr: [],
+            sId: "",
+            title: "",
+            price: 0,
+            oldPrice: "",
+            isBest: "",
+            isHot: "",
+            isNew: "",
+            content: '',
+            status: "",
+            subTitle: "",
+            salecount: 0,
+            selectedAttr: "",
+            count: 0,
+            checked: false,
+            cname: '',
+            cid: "",
+            pic: "");
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.result != null) {
-      data['result'] = this.result.toJson();
-    }
+    data['result'] = this.result.toJson();
     return data;
   }
 }
 
 class ProductContentItem {
-  String sId;
-  String title;
-  String cid;
-  Object price;
-  String oldPrice;
-  Object isBest;
-  Object isHot;
-  Object isNew;
-  String status;
-  String pic;
-  String content;
-  String cname;
-  List<Attr> attr;
-  String subTitle;
-  int salecount;
-  int count;
-  String selectedAttr;
-  bool checked;
+  late String sId;
+  late String title;
+  late String cid;
+  late Object price;
+  late String oldPrice;
+  late Object isBest;
+  late Object isHot;
+  late Object isNew;
+  late String status;
+  late String pic;
+  late String content;
+  late String cname;
+  late List<Attr> attr;
+  late String subTitle;
+  late int salecount;
+  late int count;
+  late String selectedAttr;
+  late bool checked;
   ProductContentItem(
-      {this.sId,
-      this.title,
-      this.cid,
-      this.price,
-      this.oldPrice,
-      this.isBest,
-      this.isHot,
-      this.isNew,
-      this.status,
-      this.pic,
-      this.content,
-      this.cname,
-      this.attr,
-      this.subTitle,
-      this.salecount,
-      this.count,
-      this.checked,
-      this.selectedAttr});
+      {required this.sId,
+      required this.title,
+      required this.cid,
+      required this.price,
+      required this.oldPrice,
+      required this.isBest,
+      required this.isHot,
+      required this.isNew,
+      required this.status,
+      required this.pic,
+      required this.content,
+      required this.cname,
+      required this.attr,
+      required this.subTitle,
+      required this.salecount,
+      required this.count,
+      required this.checked,
+      required this.selectedAttr});
 
   ProductContentItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -73,7 +107,7 @@ class ProductContentItem {
     content = json['content'];
     cname = json['cname'];
     if (json['attr'] != null) {
-      attr = new List<Attr>();
+      attr = <Attr>[];
       json['attr'].forEach((v) {
         attr.add(new Attr.fromJson(v));
       });
@@ -99,9 +133,7 @@ class ProductContentItem {
     data['pic'] = this.pic;
     data['content'] = this.content;
     data['cname'] = this.cname;
-    if (this.attr != null) {
-      data['attr'] = this.attr.map((v) => v.toJson()).toList();
-    }
+    data['attr'] = this.attr.map((v) => v.toJson()).toList();
     data['sub_title'] = this.subTitle;
     data['salecount'] = this.salecount;
     return data;
@@ -115,10 +147,10 @@ class ProductAttrItem {
 }
 
 class Attr {
-  String cate;
-  List<String> list;
-  RxList attrlist;
-  Attr({this.cate, this.list});
+  late String cate;
+  late List<String> list;
+  late RxList attrlist;
+  Attr({required this.cate, required this.list});
 
   Attr.fromJson(Map<String, dynamic> json) {
     cate = json['cate'];

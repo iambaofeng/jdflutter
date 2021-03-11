@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import './routers/route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> main() async {
+Future main() async {
   await initServices();
 
   /// 等待服务初始化.
@@ -45,7 +45,7 @@ class MyAppController extends GetxController {
 /// 在你运行Flutter应用之前，让你的服务初始化是一个明智之举。
 ////因为你可以控制执行流程（也许你需要加载一些主题配置，apiKey，由用户自定义的语言等，所以在运行ApiService之前加载SettingService。
 ///所以GetMaterialApp()不需要重建，可以直接取值。
-void initServices() async {
+initServices() async {
   print('starting services ...');
 
   ///这里是你放get_storage、hive、shared_pref初始化的地方。

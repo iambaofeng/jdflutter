@@ -68,6 +68,7 @@ class RegisterSecondPage extends StatelessWidget {
                             right: 0,
                             top: 0,
                             child: ElevatedButton(
+                              onPressed: null,
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all(Colors.black12),

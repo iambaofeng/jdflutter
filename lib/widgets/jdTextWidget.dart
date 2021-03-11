@@ -6,12 +6,20 @@ class jdText extends StatelessWidget {
   jdTextController vm = Get.put(jdTextController());
   final String text;
   final bool isPassword;
-  final Object onChanged;
-  jdText({this.text, this.isPassword, this.onChanged});
+  final void Function(String)? onChanged;
+  final int maxLines;
+  final double height;
+  jdText(
+      {this.text = '输入点什么',
+      this.isPassword = false,
+      this.onChanged = null,
+      this.maxLines = 1,
+      this.height = 68});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
+        maxLines: maxLines,
         obscureText: isPassword,
         autofocus: true,
         decoration: InputDecoration(
@@ -21,7 +29,7 @@ class jdText extends StatelessWidget {
                 borderSide: BorderSide.none)),
         onChanged: onChanged,
       ),
-      height: setHeight(68),
+      height: setHeight(height),
       decoration: BoxDecoration(
           // color: Color.fromRGBO(233, 233, 233, 0.8),
           // borderRadius: BorderRadius.circular(30)

@@ -1,19 +1,19 @@
 class CatProductModel {
-  String sId;
-  String title;
-  String pic;
-  double price;
-  String selectedAttr;
-  int count;
-  bool checked;
+  late String sId;
+  late String title;
+  late String pic;
+  late double price;
+  late String selectedAttr;
+  late int count;
+  late bool checked;
   CatProductModel(
-      {this.sId,
-      this.title,
-      this.pic,
-      this.price,
-      this.selectedAttr,
-      this.checked,
-      this.count});
+      {this.sId = '',
+      this.title = '',
+      this.pic = '',
+      this.price = 0.0,
+      this.selectedAttr = '',
+      this.checked = false,
+      this.count = 0});
 
   CatProductModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];

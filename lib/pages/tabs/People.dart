@@ -110,12 +110,20 @@ class PeoplePage extends StatelessWidget {
             title: Text('在线客服'),
           ),
           Divider(),
-          JdButton(
-            text: '退出登录',
-            cb: () {
-              userServices.loginOut();
-            },
-          )
+          Obx(() => userServices.userinfo.value.tel != null
+              ? Container(
+                  padding: EdgeInsets.all(
+                    setWidth(20),
+                  ),
+                  child: JdButton(
+                    text: '退出登录',
+                    color: Colors.red,
+                    cb: () {
+                      userServices.loginOut();
+                    },
+                  ),
+                )
+              : Text(''))
         ],
       ),
     );
