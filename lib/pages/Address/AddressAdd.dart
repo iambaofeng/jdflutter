@@ -1,7 +1,12 @@
 // import 'package:city_pickers/city_pickers.dart';
 import 'package:city_pickers/city_pickers.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/pages/Address/AddressList.dart';
+import 'package:flutter_jdshop/services/SignServices.dart';
+import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:flutter_jdshop/widgets/jdTextWidget.dart';
 import 'package:get/get.dart';
@@ -31,7 +36,7 @@ class AddressAddPage extends StatelessWidget {
             jdText(
               text: '收货人电话：',
               onChanged: (value) {
-                vm.tel = value;
+                vm.phone = value;
               },
             ),
             SizedBox(
@@ -81,7 +86,7 @@ class AddressAddPage extends StatelessWidget {
               maxLines: 4,
               height: 200,
               onChanged: (value) {
-                vm.address = value;
+                vm.address = "${vm.area.value} ${value}";
               },
             ),
             SizedBox(
@@ -90,6 +95,9 @@ class AddressAddPage extends StatelessWidget {
             JdButton(
               text: '增加',
               color: Colors.red,
+              cb: () {
+                vm.addAddress();
+              },
             )
           ],
         ),
@@ -99,13 +107,45 @@ class AddressAddPage extends StatelessWidget {
 }
 
 class AddressAddPageController extends GetxController {
+  SignServices signServices = Get.find();
+  UserServices userServices = Get.find();
+  AddressListPageController addressListPageController = Get.find();
   String name = '';
-  String tel = '';
+  String phone = '';
   String address = '';
   final area = "".obs;
+  Map<String, dynamic> tmpJson = {};
   @override
   void onInit() {
     // fetchApi();
     super.onInit();
+  }
+
+  String getSgin() {
+    tmpJson = {
+      "uid": userServices.userinfo.value.sId,
+      "name": name,
+      "phone": phone,
+      "address": address,
+      'salt': userServices.userinfo.value.salt
+    };
+    print(tmpJson);
+    return signServices.getSign(tmpJson);
+  }
+
+  void addAddress() async {
+    String api = "${Config.domain}api/addAddress";
+    var result = await Dio().post(api, data: {
+      "uid": userServices.userinfo.value.sId,
+      "name": name,
+      "phone": phone,
+      "address": address,
+      "sign": getSgin()
+    });
+    print(result);
+    if (result.data['success']) {
+      addressListPageController.getAddressList();
+      Get.back();
+    }
   }
 }

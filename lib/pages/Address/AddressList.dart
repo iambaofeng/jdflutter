@@ -1,5 +1,12 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/model/AddressItemModel.dart';
+import 'package:flutter_jdshop/services/SignServices.dart';
+import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:get/get.dart';
 
 class AddressListPage extends StatelessWidget {
@@ -14,59 +21,65 @@ class AddressListPage extends StatelessWidget {
       body: Container(
           child: Stack(
         children: [
-          ListView(
-            children: [
-              SizedBox(
-                height: setHeight(40),
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.check,
-                  color: Colors.red,
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('张三 15809603472'),
-                    SizedBox(
-                      height: setHeight(10),
-                    ),
-                    Text('北京市海淀区西二旗')
-                  ],
-                ),
-                trailing: Icon(
-                  Icons.edit,
-                  color: Colors.blue,
-                ),
-              ),
-              Divider(
-                height: setHeight(20),
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.check,
-                  color: Colors.red,
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('张三 15809603472'),
-                    SizedBox(
-                      height: setHeight(10),
-                    ),
-                    Text('北京市海淀区西二旗')
-                  ],
-                ),
-                trailing: Icon(
-                  Icons.edit,
-                  color: Colors.blue,
-                ),
-              ),
-              Divider(
-                height: setHeight(20),
-              ),
-            ],
-          ),
+          Obx(() => ListView.builder(
+              itemCount: vm.addressList.length,
+              itemBuilder: (context, index) {
+                if (vm.addressList[index].value.defaultAddress == 1) {
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: Icon(
+                          Icons.check,
+                          color: Colors.red,
+                        ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                '${vm.addressList[index].value.name}  ${vm.addressList[index].value.phone}'),
+                            SizedBox(
+                              height: setHeight(10),
+                            ),
+                            Text('${vm.addressList[index].value.address}')
+                          ],
+                        ),
+                        trailing: Icon(
+                          Icons.edit,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      Divider(
+                        height: setHeight(20),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      ListTile(
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                '${vm.addressList[index].value.name}  ${vm.addressList[index].value.phone}'),
+                            SizedBox(
+                              height: setHeight(10),
+                            ),
+                            Text('${vm.addressList[index].value.address}')
+                          ],
+                        ),
+                        trailing: Icon(
+                          Icons.edit,
+                          color: Colors.blue,
+                        ),
+                      ),
+                      Divider(
+                        height: setHeight(20),
+                      ),
+                    ],
+                  );
+                }
+              })),
           Positioned(
               bottom: 0,
               width: setWidth(750),
@@ -104,4 +117,34 @@ class AddressListPage extends StatelessWidget {
   }
 }
 
-class AddressListPageController extends GetxController {}
+class AddressListPageController extends GetxController {
+  SignServices signServices = Get.find();
+  UserServices userServices = Get.find();
+
+  final addressList = <Rx<AddressItemModel>>[].obs;
+
+  @override
+  void onInit() {
+    getAddressList();
+    super.onInit();
+  }
+
+  String getSgin() {
+    Map<String, dynamic> tmpJson = {
+      "uid": userServices.userinfo.value.sId,
+      'salt': userServices.userinfo.value.salt
+    };
+    print(tmpJson);
+    return signServices.getSign(tmpJson);
+  }
+
+  void getAddressList() async {
+    addressList.clear();
+    String api =
+        "${Config.domain}api/addressList?uid=${userServices.userinfo.value.sId}&sign=${getSgin()}";
+    var result = await Dio().get(api);
+    if (result.data['result'] != null) {
+      addressList.addAll(AddressModel.fromJson(result.data).result);
+    }
+  }
+}

@@ -284,10 +284,10 @@ class HomePageController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    SearchServices.setSearchData('aaa');
+    // SearchServices.setSearchData('aaa');
     _getFocusData();
     _getGuessYouLikeData();
     _getHotProductData();
-    signServices.getSign('123');
+    // signServices.getSign('123');
   }
 }
