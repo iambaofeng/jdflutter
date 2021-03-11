@@ -1,3 +1,3 @@
 class Api {
-  static const String TEST_API = "test_api";
+  static const String ADDRESS_LIST = "api/addressList";
 }

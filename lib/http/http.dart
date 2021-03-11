@@ -11,25 +11,26 @@ import 'package:flutter_jdshop/http/Proxy.dart';
 import 'package:flutter_jdshop/http/ResponseInterceptors.dart';
 
 class Http {
-  //一个人工智能回答的免费API
-  final int _CONNECTTIMEOUT = 5000;
-  final int _RECEIVETIMEOUT = 3000;
+  //超时时间
+  static const int _CONNECTTIMEOUT = 5000;
+  static const int _RECEIVETIMEOUT = 3000;
 
   //单例模式
-  static Http? _instance;
+  static final Http _instance = Http._init();
+  factory Http() => _instance;
   late Dio _dio;
   late BaseOptions _options;
 
-  //单例模式，只创建一次实例
-  static Http getInstance() {
-    if (null == _instance) {
-      _instance = new Http();
-    }
-    return _instance!;
-  }
+  // //单例模式，只创建一次实例
+  // static Http getInstance() {
+  //   if (null == _instance) {
+  //     _instance = new Http();
+  //   }
+  //   return _instance!;
+  // }
 
   //构造函数
-  Http() {
+  Http._init() {
     _options = new BaseOptions(
         baseUrl: Config.BASE_URL,
         //连接时间为5秒

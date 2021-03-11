@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/http/Api.dart';
 import 'package:flutter_jdshop/http/http.dart';
 import 'package:flutter_jdshop/model/AddressItemModel.dart';
 import 'package:flutter_jdshop/services/SignServices.dart';
@@ -144,7 +145,7 @@ class AddressListPageController extends GetxController {
     // String api =
     //     "${Config.domain}api/addressList?uid=${userServices.userinfo.value.sId}&sign=${getSgin()}";
     // var result = await Dio().get(api);
-    var result = await Http.getInstance().get('api/addressList',
+    var result = await Http().get(Api.ADDRESS_LIST,
         data: {'uid': userServices.userinfo.value.sId, 'sign': getSgin()});
 
     // print(result);
