@@ -81,7 +81,7 @@ class RegisterThirdPageController extends GetxController {
   }
 
   void register() async {
-    String api = "${Config.domain}api/register";
+    String api = "${Config.BASE_URL}api/register";
     var response = await Dio().post(api,
         data: {"tel": first.tel, 'code': second.code, 'password': password});
 

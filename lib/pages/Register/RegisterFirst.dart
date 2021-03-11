@@ -62,7 +62,7 @@ class RegisterFirstPageController extends GetxController {
   sendCode() async {
     RegExp mobileReg = RegExp(r"^1\d{10}$");
     if (mobileReg.hasMatch(tel)) {
-      String api = "${Config.domain}api/sendCode";
+      String api = "${Config.BASE_URL}api/sendCode";
       var response = await Dio().post(api, data: {"tel": tel});
 
       if (response.data['success']) {

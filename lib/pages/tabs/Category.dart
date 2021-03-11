@@ -138,7 +138,7 @@ class CategoryPageController extends GetxController {
   final rightCateList = <CatItemModel>[].obs;
 
   void _getLeftCateData() async {
-    var api = '${Config.domain}api/pcate';
+    var api = '${Config.BASE_URL}api/pcate';
     var res = await Dio().get(api);
     print(res.data);
     var result = CatModel.fromJson(res.data).result;
@@ -154,14 +154,14 @@ class CategoryPageController extends GetxController {
   }
 
   _getRightCateData(pid) async {
-    var api = '${Config.domain}api/pcate?pid=${pid}';
+    var api = '${Config.BASE_URL}api/pcate?pid=${pid}';
     var res = await Dio().get(api);
     print(res.data);
     var result = CatModel.fromJson(res.data).result;
 
     result.forEach((element) {
       var str = element.pic;
-      element.pic = Config.domain + str.replaceAll('\\', '/');
+      element.pic = Config.BASE_URL + str.replaceAll('\\', '/');
     });
 
     rightCateList.clear();

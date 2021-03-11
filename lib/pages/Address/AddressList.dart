@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/http/http.dart';
 import 'package:flutter_jdshop/model/AddressItemModel.dart';
 import 'package:flutter_jdshop/services/SignServices.dart';
 import 'package:flutter_jdshop/services/UserServices.dart';
@@ -140,11 +141,15 @@ class AddressListPageController extends GetxController {
 
   void getAddressList() async {
     addressList.clear();
-    String api =
-        "${Config.domain}api/addressList?uid=${userServices.userinfo.value.sId}&sign=${getSgin()}";
-    var result = await Dio().get(api);
-    if (result.data['result'] != null) {
-      addressList.addAll(AddressModel.fromJson(result.data).result);
-    }
+    // String api =
+    //     "${Config.domain}api/addressList?uid=${userServices.userinfo.value.sId}&sign=${getSgin()}";
+    // var result = await Dio().get(api);
+    var result = Http.getInstance().get('api/addressList',
+        data: {'uid': userServices.userinfo.value.sId, 'sign': getSgin()});
+
+    print(result);
+    // if (result.data['result'] != null) {
+    //   addressList.addAll(AddressModel.fromJson(result.data).result);
+    // }
   }
 }

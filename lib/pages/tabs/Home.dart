@@ -238,12 +238,12 @@ class HomePageController extends GetxController {
   SignServices signServices = Get.find();
   //获取轮播图
   void _getFocusData() async {
-    var api = '${Config.domain}api/focus';
+    var api = '${Config.BASE_URL}api/focus';
     var res = await Dio().get(api);
     var result = FocusModel.fromJson(res.data).result;
     result.forEach((element) {
       var str = element.pic;
-      element.pic = Config.domain + str.replaceAll('\\', '/');
+      element.pic = Config.BASE_URL + str.replaceAll('\\', '/');
       print(element.pic);
     });
     imgList.clear();
@@ -254,13 +254,13 @@ class HomePageController extends GetxController {
 
   //获取猜你喜欢
   _getGuessYouLikeData() async {
-    var api = '${Config.domain}api/plist?is_hot=1';
+    var api = '${Config.BASE_URL}api/plist?is_hot=1';
     var res = await Dio().get(api);
     var result = ProductModel.fromJson(res.data).result;
 
     result.forEach((element) {
       var str = element.sPic;
-      element.sPic = Config.domain + str.replaceAll('\\', '/');
+      element.sPic = Config.BASE_URL + str.replaceAll('\\', '/');
     });
     gussproductList.clear();
     gussproductList.addAll(result);
@@ -268,13 +268,13 @@ class HomePageController extends GetxController {
 
   //获取热门推荐
   _getHotProductData() async {
-    var api = '${Config.domain}api/plist?is_best=1';
+    var api = '${Config.BASE_URL}api/plist?is_best=1';
     var res = await Dio().get(api);
     var result = ProductModel.fromJson(res.data).result;
 
     result.forEach((element) {
       var str = element.sPic;
-      element.sPic = Config.domain + str.replaceAll('\\', '/');
+      element.sPic = Config.BASE_URL + str.replaceAll('\\', '/');
     });
     hotproductList.clear();
     hotproductList.addAll(result);

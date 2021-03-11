@@ -198,14 +198,14 @@ class ProductContentController extends GetxController {
   }
 
   _getContentData() async {
-    var api = '${Config.domain}api/pcontent?id=${this._id}';
+    var api = '${Config.BASE_URL}api/pcontent?id=${this._id}';
 
     print(api);
     var res = await Dio().get(api);
 
     // print(res.data);
     var result = (ProductContentModel.fromJson(res.data).result);
-    result.pic = Config.domain + result.pic.replaceAll('\\', '/');
+    result.pic = Config.BASE_URL + result.pic.replaceAll('\\', '/');
     print(result.pic);
     print(result.title);
     print(result.subTitle);

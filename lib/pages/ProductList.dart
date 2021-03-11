@@ -334,10 +334,10 @@ class ProductListPageController extends GetxController {
     var api = '';
     if (_cid != null) {
       api =
-          '${Config.domain}api/plist?cid=${this._cid}&page=${this._page}&pageSize=${this._pageSize}';
+          '${Config.BASE_URL}api/plist?cid=${this._cid}&page=${this._page}&pageSize=${this._pageSize}';
     } else {
       api =
-          '${Config.domain}api/plist?page=${this._page}&pageSize=${this._pageSize}&search=${this._keywords}';
+          '${Config.BASE_URL}api/plist?page=${this._page}&pageSize=${this._pageSize}&search=${this._keywords}';
     }
 
     print(api);
@@ -348,7 +348,7 @@ class ProductListPageController extends GetxController {
 
     result.forEach((element) {
       var str = element.sPic;
-      element.sPic = Config.domain + str.replaceAll('\\', '/');
+      element.sPic = Config.BASE_URL + str.replaceAll('\\', '/');
       // print(element.sPic);
     });
 

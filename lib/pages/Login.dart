@@ -112,7 +112,7 @@ class LoginPageController extends GetxController {
       SmartDialog.showToast('密码不正确',
           alignment: Alignment.center, time: Duration(milliseconds: 3000));
     } else {
-      String api = "${Config.domain}api/doLogin";
+      String api = "${Config.BASE_URL}api/doLogin";
       var response = await Dio()
           .post(api, data: {"username": username, 'password': password});
 

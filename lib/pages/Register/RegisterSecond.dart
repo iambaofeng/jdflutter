@@ -127,7 +127,7 @@ class RegisterSecondPageController extends GetxController {
   }
 
   checkCode() async {
-    String api = "${Config.domain}api/validateCode";
+    String api = "${Config.BASE_URL}api/validateCode";
     var response =
         await Dio().post(api, data: {"tel": first.tel, 'code': code});
 

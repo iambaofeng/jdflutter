@@ -134,7 +134,7 @@ class AddressAddPageController extends GetxController {
   }
 
   void addAddress() async {
-    String api = "${Config.domain}api/addAddress";
+    String api = "${Config.BASE_URL}api/addAddress";
     var result = await Dio().post(api, data: {
       "uid": userServices.userinfo.value.sId,
       "name": name,
