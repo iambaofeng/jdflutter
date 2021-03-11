@@ -144,12 +144,12 @@ class AddressListPageController extends GetxController {
     // String api =
     //     "${Config.domain}api/addressList?uid=${userServices.userinfo.value.sId}&sign=${getSgin()}";
     // var result = await Dio().get(api);
-    var result = Http.getInstance().get('api/addressList',
+    var result = await Http.getInstance().get('api/addressList',
         data: {'uid': userServices.userinfo.value.sId, 'sign': getSgin()});
 
-    print(result);
-    // if (result.data['result'] != null) {
-    //   addressList.addAll(AddressModel.fromJson(result.data).result);
-    // }
+    // print(result);
+    if (result['result'] != null) {
+      addressList.addAll(AddressModel.fromJson(result).result);
+    }
   }
 }
