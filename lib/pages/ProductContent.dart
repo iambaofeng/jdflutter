@@ -98,7 +98,7 @@ class ProductContentPage extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Get.toNamed('cart');
+                                  Get.toNamed('/cart');
                                   cartPageController.isEdit.value = false;
                                 },
                                 child: Container(

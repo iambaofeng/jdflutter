@@ -57,6 +57,8 @@ flutter:
     - images/user.png
     - images/user_bg.jpg
     - images/login.png
+    - images/alipay.png
+    - images/weixinpay.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

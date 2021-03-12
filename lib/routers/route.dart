@@ -10,6 +10,7 @@ import 'package:flutter_jdshop/pages/Register/RegisterSecond.dart';
 import 'package:flutter_jdshop/pages/Register/RegisterThird.dart';
 import 'package:flutter_jdshop/pages/Search.dart';
 import 'package:flutter_jdshop/pages/Tab.dart';
+import 'package:flutter_jdshop/pages/pay.dart';
 import 'package:flutter_jdshop/pages/tabs/Cart.dart';
 import 'package:flutter_jdshop/pages/tabs/Category.dart';
 import 'package:flutter_jdshop/pages/tabs/Home.dart';
@@ -33,4 +34,8 @@ var routes = [
   GetPage(name: '/addressList', page: () => AddressListPage()),
   GetPage(name: '/addressAdd', page: () => AddressAddPage()),
   GetPage(name: '/addressEdit', page: () => AddressEditPage()),
+  GetPage(
+    name: '/pay',
+    page: () => PayPage(),
+  )
 ];

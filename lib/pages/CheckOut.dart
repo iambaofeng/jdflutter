@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/http/Api.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_jdshop/pages/Cart/CartNumber.dart';
 import 'package:flutter_jdshop/services/CartServices.dart';
 import 'package:flutter_jdshop/services/SignServices.dart';
 import 'package:flutter_jdshop/services/UserServices.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class CheckOutPage extends StatelessWidget {
@@ -177,7 +180,9 @@ class CheckOutPage extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
                         child: Text('立即下单'),
-                        onPressed: () {},
+                        onPressed: () {
+                          vm.putOrder();
+                        },
                         style: ButtonStyle(
                             textStyle: MaterialStateProperty.all(
                                 TextStyle(color: Colors.white)),
@@ -241,5 +246,40 @@ class CheckOutPageController extends GetxController {
     });
     // defaultAddress(AddressItemModel.fromJson(result));
     addressList(AddressModel.fromJson(result).result);
+  }
+
+  putOrder() async {
+    if (addressList.length == 0) {
+      SmartDialog.showToast('必须选择收货地址！', alignment: Alignment.center);
+      return false;
+    }
+    Map<String, dynamic> params = {
+      "uid": userServices.userinfo.value.sId,
+      "address": addressList[0].value.address,
+      'phone': addressList[0].value.phone,
+      "name": addressList[0].value.name,
+      "all_price": orderSum.toStringAsFixed(1),
+      "products":
+          json.encode(checkItemList.map((element) => element.value).toList()),
+      "sign": signServices.getSign({
+        "uid": userServices.userinfo.value.sId,
+        'salt': userServices.userinfo.value.salt,
+        "address": addressList[0].value.address,
+        'phone': addressList[0].value.phone,
+        "name": addressList[0].value.name,
+        "all_price": orderSum.toStringAsFixed(1),
+        "products":
+            json.encode(checkItemList.map((element) => element.value).toList()),
+      })
+    };
+
+    var result = await Http().post(Api.DO_ORDER, data: params);
+
+    if (result['success']) {
+      //删除购物车选中的商品
+      cartServices.removeItem();
+      Get.toNamed('/pay');
+      print('提交成功');
+    }
   }
 }

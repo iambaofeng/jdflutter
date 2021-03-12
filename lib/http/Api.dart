@@ -6,4 +6,7 @@ class Api {
       "api/changeDefaultAddress"; //修改默认收货地址
   static const String EDIT_ADDRESS = "api/editAddress"; //修改收货地址
   static const String DELETE_ADDRESS = "api/deleteAddress"; //修改收货地址
+
+  //提交订单
+  static const String DO_ORDER = "api/doOrder"; //修改收货地址
 }
