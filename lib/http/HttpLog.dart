@@ -11,6 +11,9 @@ class HttpLog extends Interceptor {
     if (options.data != null) {
       print('请求参数: ' + options.data.toString());
     }
+    if (options.queryParameters != null) {
+      print('请求参数：' + options.queryParameters.toString());
+    }
     return super.onRequest(options);
   }
 

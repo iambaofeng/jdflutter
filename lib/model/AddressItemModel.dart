@@ -45,8 +45,8 @@ class AddressItemModel {
     name = json['name'];
     phone = json['phone'];
     address = json['address'];
-    defaultAddress = json['defaultAddress'];
-    addTime = json['addTime'];
+    defaultAddress = json['default_address'];
+    addTime = json['add_time'];
     status = json['status'];
   }
 

@@ -1,10 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
+import 'package:flutter_jdshop/http/Api.dart';
+import 'package:flutter_jdshop/http/http.dart';
+import 'package:flutter_jdshop/model/AddressItemModel.dart';
 import 'package:flutter_jdshop/model/CatProductModel.dart';
 import 'package:flutter_jdshop/pages/Cart/CartNumber.dart';
 import 'package:flutter_jdshop/services/CartServices.dart';
+import 'package:flutter_jdshop/services/SignServices.dart';
+import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:get/get.dart';
 
 class CheckOutPage extends StatelessWidget {
@@ -85,33 +88,35 @@ class CheckOutPage extends StatelessWidget {
                     SizedBox(
                       height: setHeight(10),
                     ),
-                    // ListTile(
-                    //   leading: Icon(Icons.add_location),
-                    //   title: Center(
-                    //     child: Text('请添加收货地址'),
-                    //   ),
-                    //   trailing: Icon(Icons.navigate_next),
-                    //   onTap: () {
-                    //     Get.toNamed('/addressAdd');
-                    //   },
-                    // ),
-                    ListTile(
-                      // leading: Icon(Icons.add_location),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('张三 15809603472'),
-                          SizedBox(
-                            height: setHeight(10),
-                          ),
-                          Text('北京市海淀区西二旗')
-                        ],
-                      ),
-                      trailing: Icon(Icons.navigate_next),
-                      onTap: () {
-                        Get.toNamed('/addressList');
-                      },
-                    ),
+                    Obx(() => vm.addressList.length == 0
+                        ? ListTile(
+                            leading: Icon(Icons.add_location),
+                            title: Center(
+                              child: Text('请添加收货地址'),
+                            ),
+                            trailing: Icon(Icons.navigate_next),
+                            onTap: () {
+                              Get.toNamed('/addressAdd');
+                            },
+                          )
+                        : ListTile(
+                            // leading: Icon(Icons.add_location),
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    '${vm.addressList[0].value.name} ${vm.addressList[0].value.phone}'),
+                                SizedBox(
+                                  height: setHeight(10),
+                                ),
+                                Text('${vm.addressList[0].value.address}')
+                              ],
+                            ),
+                            trailing: Icon(Icons.navigate_next),
+                            onTap: () {
+                              Get.toNamed('/addressList');
+                            },
+                          )),
                     SizedBox(
                       height: setHeight(10),
                     ),
@@ -191,8 +196,13 @@ class CheckOutPage extends StatelessWidget {
 
 class CheckOutPageController extends GetxController {
   CartServices cartServices = Get.find();
+  UserServices userServices = Get.find();
+  SignServices signServices = Get.find();
 
   final checkItemList = <Rx<CatProductModel>>[].obs;
+  final defaultAddress = AddressItemModel().obs;
+  final addressList = <Rx<AddressItemModel>>[].obs;
+
   double checkItemSum = 0.0;
   double orderSum = 0.0;
   double discount = 5.0;
@@ -201,6 +211,7 @@ class CheckOutPageController extends GetxController {
   void onInit() {
     getCheckList();
     calculateOrderSum();
+    getDefaultAddress();
     super.onInit();
   }
 
@@ -217,5 +228,18 @@ class CheckOutPageController extends GetxController {
 
   void calculateOrderSum() {
     orderSum = checkItemSum - discount + shipiing;
+  }
+
+  void getDefaultAddress() async {
+    addressList.clear();
+    var result = await Http().get(Api.ONE_ADDRESS_LIST, data: {
+      'uid': userServices.userinfo.value.sId,
+      'sign': signServices.getSign({
+        "uid": userServices.userinfo.value.sId,
+        'salt': userServices.userinfo.value.salt
+      })
+    });
+    // defaultAddress(AddressItemModel.fromJson(result));
+    addressList.addAll(AddressModel.fromJson(result).result);
   }
 }

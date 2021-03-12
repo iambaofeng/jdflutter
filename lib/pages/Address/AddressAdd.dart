@@ -4,11 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/config/Config.dart';
+import 'package:flutter_jdshop/http/Api.dart';
+import 'package:flutter_jdshop/http/http.dart';
 import 'package:flutter_jdshop/pages/Address/AddressList.dart';
 import 'package:flutter_jdshop/services/SignServices.dart';
 import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:flutter_jdshop/widgets/jdButtonWidget.dart';
 import 'package:flutter_jdshop/widgets/jdTextWidget.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 
 class AddressAddPage extends StatelessWidget {
@@ -134,18 +137,19 @@ class AddressAddPageController extends GetxController {
   }
 
   void addAddress() async {
-    String api = "${Config.BASE_URL}api/addAddress";
-    var result = await Dio().post(api, data: {
+    var result = await Http().post(Api.ADD_ADDRESS, params: {
       "uid": userServices.userinfo.value.sId,
       "name": name,
       "phone": phone,
       "address": address,
       "sign": getSgin()
     });
-    print(result);
-    if (result.data['success']) {
+    if (result['success']) {
+      SmartDialog.showToast('添加成功', alignment: Alignment.center);
       addressListPageController.getAddressList();
       Get.back();
+    } else {
+      SmartDialog.showToast(result['message'], alignment: Alignment.center);
     }
   }
 }

@@ -90,7 +90,7 @@ class Http {
     late Response response;
     try {
       response = await _dio.post(url,
-          queryParameters: params, options: options, cancelToken: cancelToken);
+          data: params, options: options, cancelToken: cancelToken);
       print('postHttp response: ${response.data}');
     } on DioError catch (e) {
       print('postHttp exception: $e');

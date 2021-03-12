@@ -7,6 +7,7 @@ import 'package:flutter_jdshop/config/Config.dart';
 import 'package:flutter_jdshop/http/Api.dart';
 import 'package:flutter_jdshop/http/http.dart';
 import 'package:flutter_jdshop/model/AddressItemModel.dart';
+import 'package:flutter_jdshop/pages/CheckOut.dart';
 import 'package:flutter_jdshop/services/SignServices.dart';
 import 'package:flutter_jdshop/services/UserServices.dart';
 import 'package:get/get.dart';
@@ -59,16 +60,22 @@ class AddressListPage extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                '${vm.addressList[index].value.name}  ${vm.addressList[index].value.phone}'),
-                            SizedBox(
-                              height: setHeight(10),
-                            ),
-                            Text('${vm.addressList[index].value.address}')
-                          ],
+                        title: InkWell(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  '${vm.addressList[index].value.name}  ${vm.addressList[index].value.phone}'),
+                              SizedBox(
+                                height: setHeight(10),
+                              ),
+                              Text('${vm.addressList[index].value.address}')
+                            ],
+                          ),
+                          onTap: () {
+                            vm.changeDefaultAddress(
+                                vm.addressList[index].value.sId);
+                          },
                         ),
                         trailing: Icon(
                           Icons.edit,
@@ -122,7 +129,7 @@ class AddressListPage extends StatelessWidget {
 class AddressListPageController extends GetxController {
   SignServices signServices = Get.find();
   UserServices userServices = Get.find();
-
+  CheckOutPageController checkOutPageController = Get.find();
   final addressList = <Rx<AddressItemModel>>[].obs;
 
   @override
@@ -142,15 +149,25 @@ class AddressListPageController extends GetxController {
 
   void getAddressList() async {
     addressList.clear();
-    // String api =
-    //     "${Config.domain}api/addressList?uid=${userServices.userinfo.value.sId}&sign=${getSgin()}";
-    // var result = await Dio().get(api);
     var result = await Http().get(Api.ADDRESS_LIST,
         data: {'uid': userServices.userinfo.value.sId, 'sign': getSgin()});
+    addressList.addAll(AddressModel.fromJson(result).result);
+  }
 
-    // print(result);
-    if (result['result'] != null) {
-      addressList.addAll(AddressModel.fromJson(result).result);
+  void changeDefaultAddress(id) async {
+    var result = await Http().post(Api.CHANGE_DEFAULT_ADDRESS, params: {
+      'uid': userServices.userinfo.value.sId,
+      'id': id,
+      'sign': signServices.getSign({
+        "uid": userServices.userinfo.value.sId,
+        'salt': userServices.userinfo.value.salt,
+        'id': id
+      })
+    });
+    if (result['success']) {
+      getAddressList();
+      checkOutPageController.getDefaultAddress();
+      Get.back();
     }
   }
 }
