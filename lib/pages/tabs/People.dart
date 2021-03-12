@@ -73,6 +73,9 @@ class PeoplePage extends StatelessWidget {
               color: Colors.red,
             ),
             title: Text('全部订单'),
+            onTap: () {
+              Get.toNamed('/order');
+            },
           ),
           Divider(),
           ListTile(

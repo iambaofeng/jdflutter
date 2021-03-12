@@ -10,6 +10,8 @@ import 'package:flutter_jdshop/pages/Register/RegisterSecond.dart';
 import 'package:flutter_jdshop/pages/Register/RegisterThird.dart';
 import 'package:flutter_jdshop/pages/Search.dart';
 import 'package:flutter_jdshop/pages/Tab.dart';
+import 'package:flutter_jdshop/pages/order.dart';
+import 'package:flutter_jdshop/pages/order_info.dart';
 import 'package:flutter_jdshop/pages/pay.dart';
 import 'package:flutter_jdshop/pages/tabs/Cart.dart';
 import 'package:flutter_jdshop/pages/tabs/Category.dart';
@@ -37,5 +39,7 @@ var routes = [
   GetPage(
     name: '/pay',
     page: () => PayPage(),
-  )
+  ),
+  GetPage(name: '/order', page: () => OrderPage()),
+  GetPage(name: '/orderInfo', page: () => OrderInfoPage()),
 ];
