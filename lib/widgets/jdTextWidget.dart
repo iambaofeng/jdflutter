@@ -9,16 +9,19 @@ class jdText extends StatelessWidget {
   final void Function(String)? onChanged;
   final int maxLines;
   final double height;
+  final TextEditingController? controller;
   jdText(
       {this.text = '输入点什么',
       this.isPassword = false,
       this.onChanged = null,
       this.maxLines = 1,
-      this.height = 68});
+      this.height = 68,
+      this.controller = null});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
+        controller: controller,
         maxLines: maxLines,
         obscureText: isPassword,
         autofocus: true,

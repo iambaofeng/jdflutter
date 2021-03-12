@@ -137,7 +137,7 @@ class AddressAddPageController extends GetxController {
   }
 
   void addAddress() async {
-    var result = await Http().post(Api.ADD_ADDRESS, params: {
+    var result = await Http().post(Api.ADD_ADDRESS, data: {
       "uid": userServices.userinfo.value.sId,
       "name": name,
       "phone": phone,

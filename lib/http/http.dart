@@ -86,11 +86,11 @@ class Http {
   }
 
   //post请求
-  post(url, {params, options, cancelToken}) async {
+  post(url, {data, options, cancelToken}) async {
     late Response response;
     try {
       response = await _dio.post(url,
-          data: params, options: options, cancelToken: cancelToken);
+          data: data, options: options, cancelToken: cancelToken);
       print('postHttp response: ${response.data}');
     } on DioError catch (e) {
       print('postHttp exception: $e');

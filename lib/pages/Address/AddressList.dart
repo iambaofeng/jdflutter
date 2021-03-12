@@ -46,9 +46,13 @@ class AddressListPage extends StatelessWidget {
                             Text('${vm.addressList[index].value.address}')
                           ],
                         ),
-                        trailing: Icon(
-                          Icons.edit,
+                        trailing: IconButton(
+                          icon: Icon(Icons.edit),
                           color: Colors.blue,
+                          onPressed: () {
+                            Get.toNamed('/addressEdit',
+                                arguments: vm.addressList[index].value);
+                          },
                         ),
                       ),
                       Divider(
@@ -77,9 +81,13 @@ class AddressListPage extends StatelessWidget {
                                 vm.addressList[index].value.sId);
                           },
                         ),
-                        trailing: Icon(
-                          Icons.edit,
+                        trailing: IconButton(
+                          icon: Icon(Icons.edit),
                           color: Colors.blue,
+                          onPressed: () {
+                            Get.toNamed('/addressEdit',
+                                arguments: vm.addressList[index].value);
+                          },
                         ),
                       ),
                       Divider(
@@ -155,7 +163,7 @@ class AddressListPageController extends GetxController {
   }
 
   void changeDefaultAddress(id) async {
-    var result = await Http().post(Api.CHANGE_DEFAULT_ADDRESS, params: {
+    var result = await Http().post(Api.CHANGE_DEFAULT_ADDRESS, data: {
       'uid': userServices.userinfo.value.sId,
       'id': id,
       'sign': signServices.getSign({

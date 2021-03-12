@@ -4,4 +4,5 @@ class Api {
   static const String ONE_ADDRESS_LIST = "api/OneAddressList"; //获取默认收货地址
   static const String CHANGE_DEFAULT_ADDRESS =
       "api/changeDefaultAddress"; //修改默认收货地址
+  static const String EDIT_ADDRESS = "api/editAddress"; //修改收货地址
 }
