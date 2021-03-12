@@ -32,7 +32,7 @@ class PeoplePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  userServices.userinfo.value.tel == null
+                  userServices.userinfo.value.tel == ''
                       ? Expanded(
                           child: InkWell(
                             onTap: () {
@@ -110,7 +110,7 @@ class PeoplePage extends StatelessWidget {
             title: Text('在线客服'),
           ),
           Divider(),
-          Obx(() => userServices.userinfo.value.tel != null
+          Obx(() => userServices.userinfo.value.tel != ''
               ? Container(
                   padding: EdgeInsets.all(
                     setWidth(20),
