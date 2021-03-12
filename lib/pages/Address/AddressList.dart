@@ -17,6 +17,34 @@ class AddressListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //删除弹出框
+    _showAlertDialog(id) async {
+      var result = await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('提示信息！'),
+              content: Text('您确定要删除该条收货地址吗？'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      print('取消');
+                      Navigator.pop(context, 'Cancle');
+                    },
+                    child: Text('取消')),
+                TextButton(
+                    onPressed: () {
+                      print('确定');
+                      vm.deleteAddress(id);
+                      Navigator.pop(context, 'ok');
+                    },
+                    child: Text('确定'))
+              ],
+            );
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('收获地址列表'),
@@ -31,20 +59,29 @@ class AddressListPage extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
+                        onLongPress: () {
+                          _showAlertDialog(vm.addressList[index].value.sId);
+                        },
                         leading: Icon(
                           Icons.check,
                           color: Colors.red,
                         ),
-                        title: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                '${vm.addressList[index].value.name}  ${vm.addressList[index].value.phone}'),
-                            SizedBox(
-                              height: setHeight(10),
-                            ),
-                            Text('${vm.addressList[index].value.address}')
-                          ],
+                        title: InkWell(
+                          onTap: () {
+                            vm.changeDefaultAddress(
+                                vm.addressList[index].value.sId);
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  '${vm.addressList[index].value.name}  ${vm.addressList[index].value.phone}'),
+                              SizedBox(
+                                height: setHeight(10),
+                              ),
+                              Text('${vm.addressList[index].value.address}')
+                            ],
+                          ),
                         ),
                         trailing: IconButton(
                           icon: Icon(Icons.edit),
@@ -64,6 +101,9 @@ class AddressListPage extends StatelessWidget {
                   return Column(
                     children: [
                       ListTile(
+                        onLongPress: () {
+                          _showAlertDialog(vm.addressList[index].value.sId);
+                        },
                         title: InkWell(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +186,12 @@ class AddressListPageController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    checkOutPageController.getDefaultAddress();
+    super.onClose();
+  }
+
   String getSgin() {
     Map<String, dynamic> tmpJson = {
       "uid": userServices.userinfo.value.sId,
@@ -156,10 +202,10 @@ class AddressListPageController extends GetxController {
   }
 
   void getAddressList() async {
-    addressList.clear();
+    // addressList.clear();
     var result = await Http().get(Api.ADDRESS_LIST,
         data: {'uid': userServices.userinfo.value.sId, 'sign': getSgin()});
-    addressList.addAll(AddressModel.fromJson(result).result);
+    addressList(AddressModel.fromJson(result).result);
   }
 
   void changeDefaultAddress(id) async {
@@ -174,8 +220,23 @@ class AddressListPageController extends GetxController {
     });
     if (result['success']) {
       getAddressList();
-      checkOutPageController.getDefaultAddress();
+
       Get.back();
+    }
+  }
+
+  void deleteAddress(id) async {
+    var result = await Http().post(Api.DELETE_ADDRESS, data: {
+      'uid': userServices.userinfo.value.sId,
+      "id": id,
+      'sign': signServices.getSign({
+        "uid": userServices.userinfo.value.sId,
+        'salt': userServices.userinfo.value.salt,
+        "id": id
+      })
+    });
+    if (result['success']) {
+      getAddressList();
     }
   }
 }

@@ -231,7 +231,7 @@ class CheckOutPageController extends GetxController {
   }
 
   void getDefaultAddress() async {
-    addressList.clear();
+    // addressList.clear();
     var result = await Http().get(Api.ONE_ADDRESS_LIST, data: {
       'uid': userServices.userinfo.value.sId,
       'sign': signServices.getSign({
@@ -240,6 +240,6 @@ class CheckOutPageController extends GetxController {
       })
     });
     // defaultAddress(AddressItemModel.fromJson(result));
-    addressList.addAll(AddressModel.fromJson(result).result);
+    addressList(AddressModel.fromJson(result).result);
   }
 }
