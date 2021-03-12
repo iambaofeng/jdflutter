@@ -175,7 +175,7 @@ class CartPageController extends GetxController {
 
 //去结算
   doCheckOut() {
-    if (userServices.userinfo.value.tel == null) {
+    if (userServices.userinfo.value.tel == "") {
       SmartDialog.showToast('还未登录请先登录',
           alignment: Alignment.center, time: Duration(milliseconds: 3000));
 
