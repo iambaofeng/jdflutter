@@ -181,7 +181,7 @@ class ProductContentFirst extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(top: 10),
               child: Text(
-                father.productContentData.value.subTitle == null
+                father.productContentData.value.subTitle == ''
                     ? '没有副标题'
                     : father.productContentData.value.subTitle,
                 style:

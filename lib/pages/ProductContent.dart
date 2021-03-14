@@ -73,7 +73,7 @@ class ProductContentPage extends StatelessWidget {
               ],
             ),
             body: Obx(() {
-              if (vm.productContentData.value.sId != null) {
+              if (vm.productContentData.value.sId != '') {
                 return Stack(
                   children: [
                     TabBarView(

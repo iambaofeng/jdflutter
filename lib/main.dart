@@ -25,7 +25,7 @@ class Myapp extends StatelessWidget {
       allowFontScaling: false,
       builder: () => GetMaterialApp(
           // smartManagement: SmartManagement.keepFactory,
-          initialRoute: '/orderInfo',
+          initialRoute: '/',
           getPages: routes,
           theme: ThemeData(primaryColor: Colors.white),
           debugShowCheckedModeBanner: false,

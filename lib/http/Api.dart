@@ -8,5 +8,8 @@ class Api {
   static const String DELETE_ADDRESS = "api/deleteAddress"; //修改收货地址
 
   //提交订单
-  static const String DO_ORDER = "api/doOrder"; //修改收货地址
+  static const String DO_ORDER = "api/doOrder"; //提交订单
+
+  //订单列表
+  static const String ORDER_LIST = "api/orderList"; //订单列表
 }

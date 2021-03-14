@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
 import 'package:flutter_jdshop/model/CatProductModel.dart';
+import 'package:flutter_jdshop/model/order_model.dart';
 import 'package:get/get.dart';
 
 class OrderInfoPage extends StatelessWidget {
   OrderInfoPageController vm = Get.put(OrderInfoPageController());
 
-  Widget checkOutItem(data) {
+  Widget checkOutItem(Rx<OrderItem> data) {
     return Container(
         padding: EdgeInsets.all(setWidth(5)),
         decoration: BoxDecoration(
@@ -20,7 +21,7 @@ class OrderInfoPage extends StatelessWidget {
               width: setWidth(160),
               padding: EdgeInsets.all(setWidth(10)),
               child: Image.network(
-                data.value.pic,
+                data.value.productImg,
                 fit: BoxFit.cover,
               ),
             ),
@@ -35,7 +36,7 @@ class OrderInfoPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        data.value.title,
+                        data.value.productTitle,
                         maxLines: 2,
                       ),
                       Text(
@@ -47,13 +48,13 @@ class OrderInfoPage extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "￥${data.value.price}",
+                              "￥${data.value.productPrice}",
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
                           Align(
                             alignment: Alignment.centerRight,
-                            child: Text('x${data.value.count}'),
+                            child: Text('x${data.value.productCount}'),
                           )
                         ],
                       )
@@ -111,7 +112,7 @@ class OrderInfoPage extends StatelessWidget {
                   color: Colors.white,
                   padding: EdgeInsets.all(setWidth(20)),
                   child: Column(
-                    children: vm.orderItemList
+                    children: vm.orderInfo.orderItem
                         .map((element) => checkOutItem(element))
                         .toList(),
                   ),
@@ -129,7 +130,7 @@ class OrderInfoPage extends StatelessWidget {
                           '订单编号：',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text('xxxxxxxx')
+                        Text('${vm.orderInfo.sId}')
                       ],
                     ),
                   ),
@@ -200,5 +201,13 @@ class OrderInfoPage extends StatelessWidget {
 }
 
 class OrderInfoPageController extends GetxController {
-  final orderItemList = <Rx<CatProductModel>>[].obs;
+  // final orderItemList = <Rx<CatProductModel>>[].obs;
+  late final OrderList orderInfo;
+
+  @override
+  void onInit() {
+    orderInfo = Get.arguments;
+
+    super.onInit();
+  }
 }
