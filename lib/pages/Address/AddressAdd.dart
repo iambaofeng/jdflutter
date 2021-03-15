@@ -1,5 +1,5 @@
 // import 'package:city_pickers/city_pickers.dart';
-import 'package:city_pickers/city_pickers.dart';
+// import 'package:city_pickers/city_pickers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jdshop/common/utils/screen.dart';
@@ -53,19 +53,19 @@ class AddressAddPage extends StatelessWidget {
                       bottom: BorderSide(width: 1, color: Colors.black12))),
               child: InkWell(
                 onTap: () async {
-                  Result result = await CityPickers.showCityPicker(
-                      context: context,
-                      cancelWidget: Text(
-                        '取消',
-                        style: TextStyle(color: Colors.black54),
-                      ),
-                      confirmWidget: Text(
-                        '确定',
-                        style: TextStyle(color: Colors.black54),
-                      ));
-                  vm.area.value =
-                      "${result.provinceName}/${result.cityName}/${result.areaName}";
-                  print(result);
+                  // Result result = await CityPickers.showCityPicker(
+                  //     context: context,
+                  //     cancelWidget: Text(
+                  //       '取消',
+                  //       style: TextStyle(color: Colors.black54),
+                  //     ),
+                  //     confirmWidget: Text(
+                  //       '确定',
+                  //       style: TextStyle(color: Colors.black54),
+                  //     ));
+                  // vm.area.value =
+                  //     "${result.provinceName}/${result.cityName}/${result.areaName}";
+                  // print(result);
                 },
                 child: Row(
                   children: [
@@ -112,7 +112,8 @@ class AddressAddPage extends StatelessWidget {
 class AddressAddPageController extends GetxController {
   SignServices signServices = Get.find();
   UserServices userServices = Get.find();
-  AddressListPageController addressListPageController = Get.find();
+  AddressListPageController addressListPageController =
+      Get.put(AddressListPageController());
   String name = '';
   String phone = '';
   String address = '';

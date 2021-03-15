@@ -1,7 +1,4 @@
 {
-  // 使用 IntelliSense 了解相关属性。
-  // 悬停以查看现有属性的描述。
-  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
@@ -9,14 +6,18 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": ["--no-sound-null-safety"]
+      "args": [
+        "--no-sound-null-safety"
+      ]
     },
     {
       "name": "小米10pro",
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": ["--no-sound-null-safety"],
+      "args": [
+        "--no-sound-null-safety"
+      ],
       "deviceId": "Mi 10 Pro"
     },
     {
@@ -24,14 +25,19 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": ["--no-sound-null-safety"],
+      "args": [
+        "--no-sound-null-safety"
+      ],
       "deviceId": "TAS AN00"
-    }
+    },
   ],
   "compounds": [
     {
       "name": "所有设备",
-      "configurations": ["小米10pro", "夜神模拟器"]
+      "configurations": [
+        "小米10pro",
+        "夜神模拟器"
+      ]
     }
   ]
 }

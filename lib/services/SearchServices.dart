@@ -25,7 +25,7 @@ class SearchServices {
 
   static getSearchData(value) async {
     var data = await Storage.getString('searchList');
-    if (data != null) {
+    if (data != "") {
       //有数据
       List searchListData = json.decode(data);
       return searchListData;

@@ -35,7 +35,7 @@ class CartServices extends GetxService {
 
   getCartListData() async {
     var data = await Storage.getString('cartList');
-    if (data != null) {
+    if (data != '') {
       //有数据
       List searchListData = json.decode(data);
       return searchListData;
@@ -47,7 +47,7 @@ class CartServices extends GetxService {
 
   setCartListData(value) async {
     var data = await Storage.getString('cartList');
-    if (data != null) {
+    if (data != "") {
       //有数据，判断购物车有没有这条同属性的商品，有的话在数量上+1，没有就新增一条商品
       List cartListData = json.decode(data);
       print(cartListData);
